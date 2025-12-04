@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Le Village Numérique Résistant</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <%- include('partials/menu') %>
+    <div id="village-map">
+      <a
+        href="/nird-intro"
+        id="batiment-nird"
+        class="batiment <%= progress.nirdIntroCompleted ? 'visite' : 'a-visiter' %>"
+      >
+        <img src="/images/hotel-de-ville.png" alt="Hôtel de Ville NIRD" />
+        <span class="label">N.I.R.D. (Départ)</span>
+      </a>
+
+      <% if (progress.nirdIntroCompleted) { %>
+
+      <a
+        href="/bibliotheque"
+        id="batiment-bibliotheque"
+        class="batiment <%= progress.jalon3Completed ? 'visite' : 'a-visiter' %>"
+      >
+        <img src="/images/bibliotheque.png" alt="Bibliothèque" />
+        <span class="label">Bibliothèque (Jalons)</span>
+      </a>
+
+      <a
+        href="/ecole"
+        id="batiment-ecole"
+        class="batiment <%= progress.examenReussi ? 'visite' : 'a-visiter' %>"
+      >
+        <img src="/images/ecole.png" alt="École" />
+        <span class="label">École (Test)</span>
+      </a>
+
+      <a
+        href="/base-militaire"
+        id="batiment-militaire"
+        class="batiment <%= progress.baseMilitaireVisited ? 'visite' : 'a-visiter' %>"
+      >
+        <img src="/images/base-militaire.png" alt="Base Militaire" />
+        <span class="label">Base Militaire (Souveraineté)</span>
+      </a>
+
+      <a
+        href="/voyante"
+        id="batiment-voyante"
+        class="batiment <%= progress.maisonVoyanteVisited ? 'visite' : 'a-visiter' %>"
+      >
+        <img src="/images/maison-voyante.png" alt="Maison de la Voyante" />
+        <span class="label">La Voyante (Philosophie du Libre)</span>
+      </a>
+
+      <% } %>
+
+      <a
+        href="/snake"
+        id="buisson-cache"
+        class="batiment <%= progress.buissonSnakeFound ? 'visite' : 'cache' %>"
+      >
+        <img src="/images/buisson.png" alt="Buisson Caché" />
+        <span class="label">?</span>
+      </a>
+    </div>
+    <script src="/js/app.js"></script>
+  </body>
+</html>
