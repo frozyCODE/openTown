@@ -5,10 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Base Militaire - N.I.R.D.</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+    </style>
   </head>
   <body
     class="w-screen h-screen bg-cover bg-center overflow-hidden"
     style="background-image: url('/images/Interieur_Militaire.jpg')"
+    onload="document.body.style.opacity='1'"
   >
     <%- include('partials/menu') %>
     <div class="w-full h-full flex items-center justify-center bg-black/40">

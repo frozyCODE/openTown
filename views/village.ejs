@@ -28,8 +28,15 @@
         },
       };
     </script>
+    <style>
+      /* Empêche le flash de contenu non stylisé (FOUC) */
+      body {
+        color: black;
+        transition: opacity 0.3s ease-in-out;
+      }
+    </style>
   </head>
-  <body>
+  <body onload="document.body.style.opacity='1'">
     <%- include('partials/menu') %>
     <div
       id="village-map"
@@ -99,8 +106,6 @@
         <span class="label text-shadow">La Voyante (Philosophie du Libre)</span>
       </a>
 
-      <% } %>
-
       <a
         href="/snake"
         id="buisson-cache"
@@ -113,6 +118,8 @@
         />
         <span class="label text-shadow">?</span>
       </a>
+
+      <% } %>
     </div>
     <script src="/js/app.js"></script>
   </body>
