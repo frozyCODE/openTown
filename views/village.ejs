@@ -12,16 +12,17 @@
             keyframes: {
               "scale-pulse": {
                 "0%, 100%": { transform: "scale(1)" },
-                "50%": { transform: "scale(1.1)" },
+                "50%": { transform: "scale(1.05)" },
               },
               "scale-pulse-centered": {
                 "0%, 100%": { transform: "translateX(-50%) scale(1)" },
-                "50%": { transform: "translateX(-50%) scale(1.1)" },
+                "50%": { transform: "translateX(-50%) scale(1.05)" },
               },
             },
             animation: {
-              "scale-pulse": "scale-pulse 2s infinite",
-              "scale-pulse-centered": "scale-pulse-centered 2s infinite",
+              "scale-pulse": "scale-pulse 3s infinite ease-in-out",
+              "scale-pulse-centered":
+                "scale-pulse-centered 3s infinite ease-in-out",
             },
           },
         },
@@ -53,7 +54,7 @@
       <a
         href="/bibliotheque"
         id="batiment-bibliotheque"
-        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 top-[30%] left-[25%] <%= progress.jalon3Completed ? '' : 'animate-scale-pulse' %>"
+        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 top-[25%] left-[15%] <%= progress.jalon3Completed ? '' : 'animate-scale-pulse' %>"
       >
         <img
           src="/images/bibliotheque.png"
@@ -66,9 +67,9 @@
       <a
         href="/ecole"
         id="batiment-ecole"
-        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 top-[40%] right-[20%] <%= progress.examenReussi ? '' : 'animate-scale-pulse' %>"
+        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 top-[30%] right-[10%] <%= progress.examenReussi ? '' : 'animate-scale-pulse' %>"
       >
-        <img src="/images/ecole.png" alt="École" class="w-[200px] h-auto" />
+        <img src="/images/ecole.png" alt="École" class="w-[350px] h-auto" />
         <span class="label text-shadow">École (Test)</span>
       </a>
 
@@ -80,7 +81,7 @@
         <img
           src="/images/militaire.png"
           alt="Base Militaire"
-          class="w-[200px] h-auto"
+          class="w-[300px] h-auto"
         />
         <span class="label text-shadow">Base Militaire (Souveraineté)</span>
       </a>
@@ -93,7 +94,7 @@
         <img
           src="/images/Voyante.png"
           alt="Maison de la Voyante"
-          class="w-[200px] h-auto"
+          class="w-[300px] h-auto"
         />
         <span class="label text-shadow">La Voyante (Philosophie du Libre)</span>
       </a>
