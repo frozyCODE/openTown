@@ -11,6 +11,7 @@ app.use(express.static('public'));
 
 let userProgress = {
     nirdIntroCompleted: false,
+    nirdVisited: false, // Nouveau flag pour l'animation
     jalon1Completed: false,
     jalon2Completed: false,
     jalon3Completed: false,
@@ -32,6 +33,7 @@ app.get('/', (req, res) => {
 
 // Route d'introduction au NIRD (Contenu du clic sur le bâtiment N.I.R.D.)
 app.get('/nird-intro', (req, res) => {
+    userProgress.nirdVisited = true; // Arrête le clignotement dès la visite
     res.render('nird-intro');
 });
 
@@ -43,18 +45,22 @@ app.get('/valider-nird', (req, res) => {
 
 // Routes des Bâtiments
 app.get('/bibliotheque', (req, res) => {
+    userProgress.jalon3Completed = true; // Arrête le clignotement
     res.render('bibliotheque');
 });
 
 app.get('/ecole', (req, res) => {
+    userProgress.examenReussi = true; // Arrête le clignotement
     res.render('ecole');
 });
 
 app.get('/base-militaire', (req, res) => {
+    userProgress.baseMilitaireVisited = true; // Arrête le clignotement
     res.render('base-militaire');
 });
 
 app.get('/voyante', (req, res) => {
+    userProgress.maisonVoyanteVisited = true; // Arrête le clignotement
     res.render('voyante');
 });
 
