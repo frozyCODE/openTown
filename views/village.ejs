@@ -4,18 +4,48 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Le Village Numérique Résistant</title>
-    <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            keyframes: {
+              "scale-pulse": {
+                "0%, 100%": { transform: "scale(1)" },
+                "50%": { transform: "scale(1.1)" },
+              },
+              "scale-pulse-centered": {
+                "0%, 100%": { transform: "translateX(-50%) scale(1)" },
+                "50%": { transform: "translateX(-50%) scale(1.1)" },
+              },
+            },
+            animation: {
+              "scale-pulse": "scale-pulse 2s infinite",
+              "scale-pulse-centered": "scale-pulse-centered 2s infinite",
+            },
+          },
+        },
+      };
+    </script>
   </head>
   <body>
     <%- include('partials/menu') %>
-    <div id="village-map">
+    <div
+      id="village-map"
+      class="relative w-screen h-screen bg-cover bg-center overflow-hidden"
+      style="background-image: url('/images/fond-village.png')"
+    >
       <a
         href="/nird-intro"
         id="batiment-nird"
-        class="batiment <%= progress.nirdIntroCompleted ? 'visite' : 'a-visiter' %>"
+        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 top-[10%] left-[50%] -translate-x-1/2 <%= progress.nirdIntroCompleted ? '' : 'animate-scale-pulse-centered' %>"
       >
-        <img src="/images/hotel-de-ville.png" alt="Hôtel de Ville NIRD" />
-        <span class="label">N.I.R.D. (Départ)</span>
+        <img
+          src="/images/mairie.png"
+          alt="Hôtel de Ville NIRD"
+          class="w-[250px] h-auto"
+        />
+        <span class="label text-shadow">N.I.R.D. (Départ)</span>
       </a>
 
       <% if (progress.nirdIntroCompleted) { %>
@@ -23,37 +53,49 @@
       <a
         href="/bibliotheque"
         id="batiment-bibliotheque"
-        class="batiment <%= progress.jalon3Completed ? 'visite' : 'a-visiter' %>"
+        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 top-[40%] left-[20%] <%= progress.jalon3Completed ? '' : 'animate-scale-pulse' %>"
       >
-        <img src="/images/bibliotheque.png" alt="Bibliothèque" />
-        <span class="label">Bibliothèque (Jalons)</span>
+        <img
+          src="/images/bibliotheque.png"
+          alt="Bibliothèque"
+          class="w-[100px] h-auto"
+        />
+        <span class="label text-shadow">Bibliothèque (Jalons)</span>
       </a>
 
       <a
         href="/ecole"
         id="batiment-ecole"
-        class="batiment <%= progress.examenReussi ? 'visite' : 'a-visiter' %>"
+        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 top-[40%] right-[20%] <%= progress.examenReussi ? '' : 'animate-scale-pulse' %>"
       >
-        <img src="/images/ecole.png" alt="École" />
-        <span class="label">École (Test)</span>
+        <img src="/images/ecole.png" alt="École" class="w-[100px] h-auto" />
+        <span class="label text-shadow">École (Test)</span>
       </a>
 
       <a
         href="/base-militaire"
         id="batiment-militaire"
-        class="batiment <%= progress.baseMilitaireVisited ? 'visite' : 'a-visiter' %>"
+        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 bottom-[10%] left-[30%] <%= progress.baseMilitaireVisited ? '' : 'animate-scale-pulse' %>"
       >
-        <img src="/images/base-militaire.png" alt="Base Militaire" />
-        <span class="label">Base Militaire (Souveraineté)</span>
+        <img
+          src="/images/base-militaire.png"
+          alt="Base Militaire"
+          class="w-[100px] h-auto"
+        />
+        <span class="label text-shadow">Base Militaire (Souveraineté)</span>
       </a>
 
       <a
         href="/voyante"
         id="batiment-voyante"
-        class="batiment <%= progress.maisonVoyanteVisited ? 'visite' : 'a-visiter' %>"
+        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 bottom-[10%] right-[30%] <%= progress.maisonVoyanteVisited ? '' : 'animate-scale-pulse' %>"
       >
-        <img src="/images/maison-voyante.png" alt="Maison de la Voyante" />
-        <span class="label">La Voyante (Philosophie du Libre)</span>
+        <img
+          src="/images/maison-voyante.png"
+          alt="Maison de la Voyante"
+          class="w-[100px] h-auto"
+        />
+        <span class="label text-shadow">La Voyante (Philosophie du Libre)</span>
       </a>
 
       <% } %>
@@ -61,10 +103,14 @@
       <a
         href="/snake"
         id="buisson-cache"
-        class="batiment <%= progress.buissonSnakeFound ? 'visite' : 'cache' %>"
+        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 bottom-[5%] left-[5%] opacity-80"
       >
-        <img src="/images/buisson.png" alt="Buisson Caché" />
-        <span class="label">?</span>
+        <img
+          src="/images/buisson.png"
+          alt="Buisson Caché"
+          class="w-[100px] h-auto"
+        />
+        <span class="label text-shadow">?</span>
       </a>
     </div>
     <script src="/js/app.js"></script>

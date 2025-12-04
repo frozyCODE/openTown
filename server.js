@@ -32,9 +32,6 @@ app.get('/', (req, res) => {
 
 // Route d'introduction au NIRD (Contenu du clic sur le bâtiment N.I.R.D.)
 app.get('/nird-intro', (req, res) => {
-    if (userProgress.nirdIntroCompleted) {
-        return res.redirect('/');
-    }
     res.render('nird-intro');
 });
 

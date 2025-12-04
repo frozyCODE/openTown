@@ -43,6 +43,10 @@ body {
     transform: translateX(-50%);
 }
 
+#batiment-nird img {
+    width: 250px;
+}
+
 #batiment-bibliotheque {
     top: 40%;
     left: 20%;

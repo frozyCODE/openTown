@@ -5,17 +5,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (burgerIcon && menuOverlay && closeBtn) {
         burgerIcon.addEventListener('click', () => {
-            menuOverlay.classList.add('active');
+            menuOverlay.classList.remove('-right-full');
+            menuOverlay.classList.add('right-0');
         });
 
         closeBtn.addEventListener('click', () => {
-            menuOverlay.classList.remove('active');
+            menuOverlay.classList.remove('right-0');
+            menuOverlay.classList.add('-right-full');
         });
 
         // Fermer en cliquant en dehors du contenu
         menuOverlay.addEventListener('click', (e) => {
             if (e.target === menuOverlay) {
-                menuOverlay.classList.remove('active');
+                menuOverlay.classList.remove('right-0');
+                menuOverlay.classList.add('-right-full');
             }
         });
     }
