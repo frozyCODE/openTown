@@ -9,7 +9,7 @@ body {
     position: relative;
     width: 100vw;
     height: 100vh;
-    background-image: url('/images/village-map-bg.png'); /* Assurez-vous d'avoir cette image */
+    background-image: url('/images/fond-village.png');
     background-size: cover;
     background-position: center;
     overflow: hidden;
