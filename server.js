@@ -41,6 +41,23 @@ app.get('/valider-nird', (req, res) => {
     res.redirect('/');
 });
 
+// Routes des Bâtiments
+app.get('/bibliotheque', (req, res) => {
+    res.render('bibliotheque');
+});
+
+app.get('/ecole', (req, res) => {
+    res.render('ecole');
+});
+
+app.get('/base-militaire', (req, res) => {
+    res.render('base-militaire');
+});
+
+app.get('/voyante', (req, res) => {
+    res.render('voyante');
+});
+
 // Routes Menu
 app.get('/credits', (req, res) => {
     res.render('credits');
