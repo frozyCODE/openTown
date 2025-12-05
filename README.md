@@ -1,6 +1,6 @@
 ﻿# 🌙 Nuit de l'Info 2025 - OpenTown
 
-![Banner](https://img.shields.io/badge/Nuit%20de%20l'Info-2024-blueviolet?style=for-the-badge)
+![Banner](https://img.shields.io/badge/Nuit%20de%20l'Info-2025-blueviolet?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-En%20Développement-green?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-ISC-yellow?style=for-the-badge)
 
@@ -93,4 +93,5 @@ Une équipe de passionnés pour la Nuit de l'Info
 <p align="center">
   Fait avec ❤️ pour la Nuit de l'Info 2024.
 </p>
+
 
