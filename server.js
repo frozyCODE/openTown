@@ -62,7 +62,8 @@ let userProgress = {
     examenReussi: false,
     baseMilitaireVisited: false,
     maisonVoyanteVisited: false,
-    buissonSnakeFound: false
+    buissonSnakeFound: false,
+    cinemaVisited: false
 };
 
 // =========================================================
@@ -105,6 +106,11 @@ app.get('/base-militaire', (req, res) => {
 app.get('/voyante', (req, res) => {
     userProgress.maisonVoyanteVisited = true; // Arrête le clignotement
     res.render('voyante');
+});
+
+app.get('/cinema', (req, res) => {
+    userProgress.cinemaVisited = true; // Arrête le clignotement
+    res.render('cinema');
 });
 
 app.get('/exam-success', (req, res) => {
