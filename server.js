@@ -9,14 +9,25 @@ import { body, validationResult } from 'express-validator';
 const app = express();
 const port = 3000;
 
-// Configuration Gemini
+/**
+ * Configuration for Google Generative AI (Gemini).
+ * @type {GoogleGenerativeAI}
+ */
 const genAI = new GoogleGenerativeAI("AIzaSyDrTO1wFAujqGSMmyRcTGpB21NQ_PQpTV4");
+
+/**
+ * The Gemini model instance.
+ * @type {GenerativeModel}
+ */
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" });
 
-// Limiteur pour l'API Chat (5 requêtes par minute)
+/**
+ * Rate limiter for the Chat API.
+ * Limits requests to 5 per minute per IP.
+ */
 const chatLimiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minute
-    max: 5, // Limite à 5 requêtes par IP
+    max: 5, // Limit to 5 requests per IP
     message: { reply: "Doucement ! Philoute a besoin de repos. (Trop de requêtes)" },
     standardHeaders: true,
     legacyHeaders: false,
@@ -26,14 +37,23 @@ const chatLimiter = rateLimit({
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-// Fichiers statiques
+// Static files
 app.use(express.static('public'));
-app.use(express.json()); // Pour parser le JSON des requêtes POST
+app.use(express.json()); // To parse JSON bodies
 
-// Route API Chatbot Philoute avec Rate Limiting et Validation
+/**
+ * API Route for Philoute Chatbot.
+ * Handles user messages, validates input, and generates a response using Gemini.
+ * 
+ * @name POST /api/chat
+ * @function
+ * @memberof module:routes
+ * @param {string} req.body.message - The user's message.
+ * @returns {JSON} The chatbot's reply or an error message.
+ */
 app.post('/api/chat',
     chatLimiter,
-    body('message').trim().isLength({ min: 1, max: 500 }).escape(), // Validation : non vide, max 500 chars, échappement XSS
+    body('message').trim().isLength({ min: 1, max: 500 }).escape(), // Validation: not empty, max 500 chars, XSS escape
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -55,9 +75,13 @@ app.post('/api/chat',
         }
     });
 
+/**
+ * Object tracking the user's progress in the game.
+ * @type {Object}
+ */
 let userProgress = {
     nirdIntroCompleted: false,
-    nirdVisited: false, // Nouveau flag pour l'animation
+    nirdVisited: false, // New flag for animation
     jalon1Completed: false,
     jalon2Completed: false,
     jalon3Completed: false,
@@ -70,43 +94,85 @@ let userProgress = {
 };
 
 // ROUTES
+
+/**
+ * Home page route.
+ * Renders the village view with current progress.
+ * @name GET /
+ */
 app.get('/', (req, res) => {
     res.render('village', { progress: userProgress });
 });
 
+/**
+ * NIRD Intro route.
+ * Marks NIRD as visited.
+ * @name GET /nird-intro
+ */
 app.get('/nird-intro', (req, res) => {
-    userProgress.nirdVisited = true; // Arrête le clignotement dès la visite
+    userProgress.nirdVisited = true; // Stops blinking upon visit
     res.render('nird-intro');
 });
 
+/**
+ * Validate NIRD route.
+ * Marks NIRD intro as completed and redirects to home.
+ * @name GET /valider-nird
+ */
 app.get('/valider-nird', (req, res) => {
     userProgress.nirdIntroCompleted = true;
     res.redirect('/');
 });
 
-// Routes des Bâtiments
+// Building Routes
+
+/**
+ * Library route.
+ * Marks Jalon 3 as completed.
+ * @name GET /bibliotheque
+ */
 app.get('/bibliotheque', (req, res) => {
-    userProgress.jalon3Completed = true; // Arrête le clignotement
+    userProgress.jalon3Completed = true; // Stops blinking
     res.render('bibliotheque');
 });
 
+/**
+ * School route.
+ * Marks exam as passed (simulated).
+ * @name GET /ecole
+ */
 app.get('/ecole', (req, res) => {
-    userProgress.examenReussi = true; // Arrête le clignotement
+    userProgress.examenReussi = true; // Stops blinking
     res.render('ecole');
 });
 
+/**
+ * Military Base route.
+ * Marks base as visited.
+ * @name GET /base-militaire
+ */
 app.get('/base-militaire', (req, res) => {
-    userProgress.baseMilitaireVisited = true; // Arrête le clignotement
+    userProgress.baseMilitaireVisited = true; // Stops blinking
     res.render('base-militaire');
 });
 
+/**
+ * Fortune Teller route.
+ * Marks house as visited.
+ * @name GET /voyante
+ */
 app.get('/voyante', (req, res) => {
-    userProgress.maisonVoyanteVisited = true; // Arrête le clignotement
+    userProgress.maisonVoyanteVisited = true; // Stops blinking
     res.render('voyante');
 });
 
+/**
+ * Cinema route.
+ * Marks cinema as visited.
+ * @name GET /cinema
+ */
 app.get('/cinema', (req, res) => {
-    userProgress.cinemaVisited = true; // Arrête le clignotement
+    userProgress.cinemaVisited = true; // Stops blinking
     res.render('cinema');
 });
 
@@ -118,17 +184,17 @@ app.get('/exam-failure', (req, res) => {
     res.render('exam-failure');
 });
 
-// Route Snake (Caché)
+// Snake Route (Hidden)
 app.get('/snake', (req, res) => {
     res.render('snake');
 });
 
-// Routes Menu
+// Menu Routes
 app.get('/credits', (req, res) => {
     res.render('credits');
 });
 
-// ROUTE CONTACT — ON PASSE EMAILJS
+// CONTACT ROUTE — USING EMAILJS
 app.get('/contact', (req, res) => {
     res.render('contact', {
         publicKey: process.env.EMAILJS_PUBLIC_KEY,
