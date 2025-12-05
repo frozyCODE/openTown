@@ -1,30 +1,383 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bibliothèque - N.I.R.D.</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body>
-    <%- include('partials/menu') %>
-    <div
-      class="max-w-[800px] mx-auto mt-[50px] p-5 bg-white rounded-lg shadow-md text-center"
-    >
-      <h1 class="text-2xl font-bold mb-4">Bibliothèque</h1>
-      <div class="content mb-4">
-        <p>
-          Bienvenue à la bibliothèque. Ici se trouvent les jalons de votre
-          apprentissage.
-        </p>
-        <p>(Contenu à venir)</p>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bibliothèque - N.I.R.D.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            medieval: ['MedievalSharp', 'cursive'],
+            crimson: ['Crimson Text', 'serif'],
+          },
+          colors: {
+            parchment: '#f4e4bc',
+            ink: '#2c1810',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .glow-hover:hover {
+      filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.6));
+    }
+
+    .shelf-gradient {
+      background: linear-gradient(180deg, #5d4037 0%, #3e2723 100%);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+
+<body class="w-screen h-screen overflow-hidden bg-black">
+  <!-- Background Image with Overlay -->
+  <div class="fixed inset-0 z-0">
+    <img src="/images/interieur_bibliotheque.png" alt="Bibliothèque" class="w-full h-full object-cover opacity-80">
+    <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80"></div>
+  </div>
+
+  <%- include('partials/menu') %>
+
+    <div class="relative z-10 w-full h-full flex items-center justify-center p-4">
+      <div
+        class="max-w-4xl w-full bg-slate-900/85 backdrop-blur-md rounded-xl border border-amber-500/30 shadow-2xl shadow-black overflow-hidden flex flex-col items-center">
+
+        <!-- Header -->
+        <div class="w-full p-8 text-center border-b border-amber-500/20">
+          <h1 class="text-5xl font-medieval text-amber-100 mb-4 drop-shadow-md tracking-wide">Bibliothèque des Savoirs
+          </h1>
+          <p class="text-xl font-crimson text-amber-200/80 italic">
+            "Ici reposent les secrets des anciens et les clés de votre avenir."
+          </p>
+        </div>
+
+        <!-- Bookshelf Area -->
+        <div class="w-full p-12 flex flex-col items-center justify-center bg-white/5">
+          <div class="flex justify-center gap-16 items-end mb-1">
+            <!-- Grimoire 1 (Lore) -->
+            <div
+              class="group relative cursor-pointer transform transition-all duration-300 hover:-translate-y-4 hover:scale-110"
+              onclick="openModal('modal-grimoire-1', 1, 3)">
+              <img src="/images/grimoire1.png" alt="Grimoire 1"
+                class="w-40 h-auto glow-hover transition-all duration-300">
+              <div
+                class="opacity-0 group-hover:opacity-100 absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-amber-300 font-medieval text-lg whitespace-nowrap transition-opacity duration-300">
+                L'Histoire du N.I.R.D.</div>
+            </div>
+
+            <!-- Grimoire 2 (Resources) -->
+            <div
+              class="group relative cursor-pointer transform transition-all duration-300 hover:-translate-y-4 hover:scale-110"
+              onclick="openModal('modal-grimoire-2', 1, 2)">
+              <img src="/images/grimoire2.png" alt="Grimoire 2"
+                class="w-40 h-auto glow-hover transition-all duration-300">
+              <div
+                class="opacity-0 group-hover:opacity-100 absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-amber-300 font-medieval text-lg whitespace-nowrap transition-opacity duration-300">
+                Ressources Libres</div>
+            </div>
+          </div>
+          <!-- Shelf Visual -->
+          <div class="w-full h-6 shelf-gradient rounded-sm border-t border-[#8d6e63]"></div>
+        </div>
+
+        <!-- Footer / Back Button -->
+        <div class="w-full p-8 text-center border-t border-amber-500/20">
+          <a href="/"
+            class="group relative inline-flex items-center justify-center px-8 py-3 font-medieval text-xl text-white transition-all duration-200 bg-red-900 rounded-lg hover:bg-red-800 hover:shadow-lg hover:shadow-red-900/50 focus:outline-none ring-offset-2 focus:ring-2 ring-red-900">
+            <span class="mr-2 group-hover:-translate-x-1 transition-transform">←</span> Retour au Village
+          </a>
+        </div>
       </div>
-      <a
-        href="/"
-        class="inline-block mt-5 px-5 py-2.5 bg-green-600 text-white no-underline rounded font-bold hover:bg-green-700"
-        >Retour au Village</a
-      >
     </div>
+
+    <!-- Modals (Parchment Style) -->
+
+    <!-- Modal 1 (Lore - Multi-page) -->
+    <div id="modal-grimoire-1"
+      class="modal-container fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm transition-opacity duration-300"
+      onclick="if(event.target === this) closeModal('modal-grimoire-1')">
+      <div
+        class="relative w-full max-w-lg p-12 bg-parchment rounded-sm shadow-2xl transform scale-95 opacity-0 transition-all duration-300 modal-content"
+        style="background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png'); min-height: 600px;">
+        <!-- Close X -->
+        <button onclick="closeModal('modal-grimoire-1')"
+          class="absolute top-4 right-4 text-ink/60 hover:text-ink transition-colors z-50">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <!-- Navigation Arrows (Side) -->
+        <button onclick="changePage(this, -1)"
+          class="nav-prev absolute top-1/2 -left-16 transform -translate-y-1/2 text-white/50 hover:text-white hover:scale-110 transition-all p-2 disabled:opacity-20 disabled:cursor-not-allowed">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+            class="w-12 h-12">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+        </button>
+        <button onclick="changePage(this, 1)"
+          class="nav-next absolute top-1/2 -right-16 transform -translate-y-1/2 text-white/50 hover:text-white hover:scale-110 transition-all p-2 disabled:opacity-20 disabled:cursor-not-allowed">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+            class="w-12 h-12">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+        </button>
+
+        <!-- Content -->
+        <div class="border-2 border-ink/20 p-6 h-full relative" data-total-pages="3" id="grimoire-1-content">
+          <!-- Page 1 -->
+          <div class="book-page transition-opacity duration-300" data-page="1">
+            <h2 class="text-3xl font-medieval font-bold text-ink mb-6 text-center border-b border-ink/20 pb-4">Chapitre
+              I<br><span class="text-2xl">Le Serment de l'Ordre</span></h2>
+            <div class="prose font-crimson text-ink text-xl leading-relaxed text-left">
+              <p><span class="text-5xl float-left mr-2 font-medieval text-red-900">O</span>yez ! La quête débute par le
+                rassemblement des âmes vaillantes.</p>
+              <ul class="list-none mt-4 space-y-3 text-lg">
+                <li><strong>L'Élu :</strong> Un Sage parmi nous se lèvera pour porter l'étendard.</li>
+                <li><strong>Le Conseil :</strong> Les Anciens seront instruits des arcanes du savoir durable.</li>
+                <li><strong>La Missive :</strong> Les parchemins seront partagés via les voies éthérées.</li>
+              </ul>
+              <p class="mt-6 font-bold italic text-center font-medieval text-lg">"Ainsi s'éveille la conscience."</p>
+            </div>
+          </div>
+          <!-- Page 2 -->
+          <div class="book-page hidden transition-opacity duration-300" data-page="2">
+            <h2 class="text-3xl font-medieval font-bold text-ink mb-6 text-center border-b border-ink/20 pb-4">Chapitre
+              II<br><span class="text-2xl">L'Artisanat Sacré</span></h2>
+            <div class="prose font-crimson text-ink text-xl leading-relaxed text-left">
+              <p><span class="text-5xl float-left mr-2 font-medieval text-red-900">V</span>oici venu le temps de forger
+                nos propres outils.</p>
+              <ul class="list-none mt-4 space-y-3 text-lg">
+                <li><strong>L'Enchantement :</strong> De vieux artefacts seront purifiés par l'esprit du Pingouin.</li>
+                <li><strong>La Guilde :</strong> Des apprentis se réuniront pour restaurer les reliques.</li>
+                <li><strong>L'Apprentissage :</strong> Maîtres et disciples s'exerceront à ces nouveaux pouvoirs.</li>
+              </ul>
+              <p class="mt-6 font-bold italic text-center font-medieval text-lg">"L'expérience forge la sagesse."</p>
+            </div>
+          </div>
+          <!-- Page 3 -->
+          <div class="book-page hidden transition-opacity duration-300" data-page="3">
+            <h2 class="text-3xl font-medieval font-bold text-ink mb-6 text-center border-b border-ink/20 pb-4">Chapitre
+              III<br><span class="text-2xl">L'Héritage Éternel</span></h2>
+            <div class="prose font-crimson text-ink text-xl leading-relaxed text-left">
+              <p><span class="text-5xl float-left mr-2 font-medieval text-red-900">Q</span>ue ces préceptes soient
+                gravés à jamais.</p>
+              <ul class="list-none mt-4 space-y-3 text-lg">
+                <li><strong>Le Trésor :</strong> Les artefacts rejoindront le patrimoine du Royaume.</li>
+                <li><strong>La Loi :</strong> Cette voie sera inscrite dans le Grand Livre.</li>
+                <li><strong>Le Gardien :</strong> Le Référent sera adoubé.</li>
+              </ul>
+              <p class="mt-6 font-bold italic text-center font-medieval text-lg">"Pour les siècles des siècles."</p>
+            </div>
+          </div>
+
+          <div class="absolute bottom-2 w-full text-center text-ink/50 font-mono text-sm page-indicator">1 / 3</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 2 (Resources - Multi-page) -->
+    <div id="modal-grimoire-2"
+      class="modal-container fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm transition-opacity duration-300"
+      onclick="if(event.target === this) closeModal('modal-grimoire-2')">
+      <div
+        class="relative w-full max-w-lg p-12 bg-parchment rounded-sm shadow-2xl transform scale-95 opacity-0 transition-all duration-300 modal-content"
+        style="background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png'); min-height: 600px;">
+        <button onclick="closeModal('modal-grimoire-2')"
+          class="absolute top-4 right-4 text-ink/60 hover:text-ink transition-colors z-50">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <!-- Navigation Arrows (Side) -->
+        <button onclick="changePage(this, -1)"
+          class="nav-prev absolute top-1/2 -left-16 transform -translate-y-1/2 text-white/50 hover:text-white hover:scale-110 transition-all p-2 disabled:opacity-20 disabled:cursor-not-allowed">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+            class="w-12 h-12">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+        </button>
+        <button onclick="changePage(this, 1)"
+          class="nav-next absolute top-1/2 -right-16 transform -translate-y-1/2 text-white/50 hover:text-white hover:scale-110 transition-all p-2 disabled:opacity-20 disabled:cursor-not-allowed">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+            class="w-12 h-12">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+        </button>
+
+        <div class="border-2 border-ink/20 p-6 h-full relative" data-total-pages="2" id="grimoire-2-content">
+          <!-- Page 1: Framasoft -->
+          <div class="book-page transition-opacity duration-300" data-page="1">
+            <h2 class="text-3xl font-medieval font-bold text-ink mb-6 text-center border-b border-ink/20 pb-4">La
+              Constellation Framasoft</h2>
+            <div class="prose font-crimson text-ink text-xl leading-relaxed">
+              <p class="mb-4 text-center italic">"Dégooglisons Internet"</p>
+              <ul class="list-none space-y-4">
+                <li class="group">
+                  <a href="https://framadate.org" target="_blank"
+                    class="font-bold underline hover:text-red-800 text-2xl block">Framadate</a>
+                  <p class="text-base opacity-80 pl-2 border-l-2 border-red-900/30">Planifier des rendez-vous sans
+                    inscription.</p>
+                </li>
+                <li class="group">
+                  <a href="https://framapad.org" target="_blank"
+                    class="font-bold underline hover:text-red-800 text-2xl block">Framapad</a>
+                  <p class="text-base opacity-80 pl-2 border-l-2 border-red-900/30">Éditeur de texte collaboratif en
+                    temps réel.</p>
+                </li>
+                <li class="group">
+                  <a href="https://framacalc.org" target="_blank"
+                    class="font-bold underline hover:text-red-800 text-2xl block">Framacalc</a>
+                  <p class="text-base opacity-80 pl-2 border-l-2 border-red-900/30">Feuille de calcul collaborative.</p>
+                </li>
+                <li class="group">
+                  <a href="https://joinpeertube.org" target="_blank"
+                    class="font-bold underline hover:text-red-800 text-2xl block">PeerTube</a>
+                  <p class="text-base opacity-80 pl-2 border-l-2 border-red-900/30">Alternative libre à YouTube.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Page 2: General Tools -->
+          <div class="book-page hidden transition-opacity duration-300" data-page="2">
+            <h2 class="text-3xl font-medieval font-bold text-ink mb-6 text-center border-b border-ink/20 pb-4">L'Arsenal
+              du Quotiden</h2>
+            <div class="prose font-crimson text-ink text-xl leading-relaxed">
+              <ul class="list-none space-y-4">
+                <li class="group">
+                  <a href="https://www.mozilla.org" target="_blank"
+                    class="font-bold underline hover:text-red-800 text-2xl block">Firefox</a>
+                  <p class="text-base opacity-80">Navigateur web rapide et privé.</p>
+                </li>
+                <li class="group">
+                  <a href="https://www.libreoffice.org" target="_blank"
+                    class="font-bold underline hover:text-red-800 text-2xl block">LibreOffice</a>
+                  <p class="text-base opacity-80">Suite bureautique complète (Word, Excel, PPT).</p>
+                </li>
+                <li class="group">
+                  <a href="https://www.gimp.org" target="_blank"
+                    class="font-bold underline hover:text-red-800 text-2xl block">GIMP</a>
+                  <p class="text-base opacity-80">Alternative puissante à Photoshop.</p>
+                </li>
+                <li class="group">
+                  <a href="https://www.videolan.org/vlc/" target="_blank"
+                    class="font-bold underline hover:text-red-800 text-2xl block">VLC</a>
+                  <p class="text-base opacity-80">Lit toutes les vidéos, sans pub.</p>
+                </li>
+                <li class="group">
+                  <a href="https://linuxmint.com" target="_blank"
+                    class="font-bold underline hover:text-red-800 text-2xl block">Linux Mint</a>
+                  <p class="text-base opacity-80">Alternative simple et élégante à Windows.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="absolute bottom-2 w-full text-center text-ink/50 font-mono text-sm page-indicator">1 / 2</div>
+        </div>
+      </div>
+    </div>
+
     <script src="/js/app.js"></script>
-  </body>
+    <script>
+      // Store state for each modal
+      const modalStates = {
+        'modal-grimoire-1': { currentPage: 1, totalPages: 3 },
+        'modal-grimoire-2': { currentPage: 1, totalPages: 2 }
+      };
+
+      function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        const content = modal.querySelector('.modal-content');
+
+        // Reset state
+        modalStates[modalId].currentPage = 1;
+        updatePageDisplay(modalId);
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        setTimeout(() => {
+          content.classList.remove('scale-95', 'opacity-0');
+          content.classList.add('scale-100', 'opacity-100');
+        }, 10);
+      }
+
+      function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        const content = modal.querySelector('.modal-content');
+        content.classList.remove('scale-100', 'opacity-100');
+        content.classList.add('scale-95', 'opacity-0');
+
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }, 300);
+      }
+
+      function changePage(btn, direction) {
+        // Find parent modal ID
+        const modal = btn.closest('.modal-container');
+        const modalId = modal.id;
+        const state = modalStates[modalId];
+
+        const newPage = state.currentPage + direction;
+
+        if (newPage >= 1 && newPage <= state.totalPages) {
+          // Hide current
+          const container = modal.querySelector(`[data-total-pages]`);
+          const currentEl = container.querySelector(`[data-page="${state.currentPage}"]`);
+          currentEl.classList.add('hidden');
+
+          // Show new
+          state.currentPage = newPage;
+          const newEl = container.querySelector(`[data-page="${state.currentPage}"]`);
+          newEl.classList.remove('hidden');
+
+          updatePageDisplay(modalId);
+        }
+      }
+
+      function updatePageDisplay(modalId) {
+        const modal = document.getElementById(modalId);
+        const state = modalStates[modalId];
+        const prevBtn = modal.querySelector('.nav-prev');
+        const nextBtn = modal.querySelector('.nav-next');
+        const indicator = modal.querySelector('.page-indicator');
+
+        // Logic Indicator
+        if (indicator) indicator.textContent = `${state.currentPage} / ${state.totalPages}`;
+
+        // Logic Buttons
+        if (state.currentPage === 1) {
+          prevBtn.disabled = true;
+          prevBtn.classList.add('opacity-20');
+        } else {
+          prevBtn.disabled = false;
+          prevBtn.classList.remove('opacity-20');
+        }
+
+        if (state.currentPage === state.totalPages) {
+          nextBtn.disabled = true;
+          nextBtn.classList.add('opacity-20');
+        } else {
+          nextBtn.disabled = false;
+          nextBtn.classList.remove('opacity-20');
+        }
+      }
+    </script>
+</body>
+
 </html>

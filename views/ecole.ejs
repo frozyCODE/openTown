@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>École - N.I.R.D.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Architects+Daughter&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+      .chalk-font {
+        font-family: "Patrick Hand", cursive;
+      }
+      .blackboard {
+        background-color: #2d3436;
+        background-image: url("https://www.transparenttextures.com/patterns/black-scales.png");
+        border: 12px solid #5d4037;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.8),
+          inset 0 0 50px rgba(0, 0, 0, 0.5);
+        color: #dfe6e9;
+      }
+      .prof-hover:hover {
+        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
+        transform: scale(1.02);
+      }
+    </style>
+  </head>
+  <body
+    class="w-screen h-screen bg-cover bg-center overflow-hidden"
+    style="background-image: url('/images/interieur_ecole.jpg')"
+    onload="document.body.style.opacity='1'"
+  >
+    <%- include('partials/menu') %>
+
+    <div
+      class="w-full h-full flex items-center justify-between bg-black/30 relative px-[10%]"
+    >
+      <!-- Le Professeur 1 (Cours) -->
+      <div
+        class="cursor-pointer transition-all duration-300 prof-hover z-10 flex flex-col items-center"
+        onclick="openCourse()"
+      >
+        <img
+          src="/images/Prof.png"
+          alt="Professeur Cours"
+          class="h-[60vh] object-contain drop-shadow-2xl"
+        />
+        <div
+          class="bg-white/90 text-black px-6 py-2 rounded-full font-bold text-xl text-center mt-4 shadow-lg transform -translate-y-4"
+        >
+          Le Cours
+        </div>
+      </div>
+
+      <!-- Le Professeur 2 (Examen) -->
+      <div
+        class="cursor-pointer transition-all duration-300 prof-hover z-10 flex flex-col items-center"
+        onclick="openExam()"
+      >
+        <img
+          src="/images/prof2.png"
+          alt="Professeur Examen"
+          class="h-[60vh] object-contain drop-shadow-2xl"
+        />
+        <div
+          class="bg-white/90 text-black px-6 py-2 rounded-full font-bold text-xl text-center mt-4 shadow-lg transform -translate-y-4"
+        >
+          L'Examen
+        </div>
+      </div>
+
+      <!-- Modal Cours (Tableau Noir) -->
+      <div
+        id="course-modal"
+        class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm transition-opacity duration-300"
+        onclick="if(event.target === this) closeCourse()"
+      >
+        <div
+          class="relative w-full max-w-4xl p-10 blackboard rounded-lg shadow-2xl transform scale-95 opacity-0 transition-all duration-300 modal-content chalk-font"
+        >
+          <button
+            onclick="closeCourse()"
+            class="absolute top-4 right-4 text-white/60 hover:text-white text-4xl"
+          >
+            &times;
+          </button>
+
+          <h2
+            class="text-4xl font-bold mb-8 text-center text-white underline decoration-wavy decoration-white/30"
+          >
+            Introduction à l'Open Source
+          </h2>
+
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-8 text-2xl leading-relaxed"
+          >
+            <div>
+              <h3 class="text-3xl font-bold text-yellow-300 mb-4">
+                1. La Transparence
+              </h3>
+              <p class="mb-6">
+                Le code est ouvert. Tout le monde peut le lire, le vérifier et
+                comprendre comment il fonctionne. Pas de secrets, pas de boîtes
+                noires.
+              </p>
+
+              <h3 class="text-3xl font-bold text-yellow-300 mb-4">
+                2. La Collaboration
+              </h3>
+              <p>
+                On ne construit pas seul dans son coin. On partage, on améliore
+                le travail des autres, et on grandit ensemble. C'est la force de
+                la communauté.
+              </p>
+            </div>
+            <div>
+              <h3 class="text-3xl font-bold text-yellow-300 mb-4">
+                3. La Liberté
+              </h3>
+              <p class="mb-6">
+                Liberté d'utiliser, d'étudier, de modifier et de redistribuer.
+                C'est le pouvoir rendu aux utilisateurs.
+              </p>
+
+              <h3 class="text-3xl font-bold text-yellow-300 mb-4">
+                4. Exemples Concrets
+              </h3>
+              <ul class="list-disc list-inside mb-6 space-y-2 text-xl">
+                <li>
+                  <span class="font-bold text-green-400">Linux</span> (Système)
+                </li>
+                <li>
+                  <span class="font-bold text-orange-400">Firefox</span>
+                  (Navigateur)
+                </li>
+                <li>
+                  <span class="font-bold text-orange-500">VLC</span> (Vidéo)
+                </li>
+                <li>
+                  <span class="font-bold text-blue-400">Blender</span> (3D)
+                </li>
+              </ul>
+
+              <div
+                class="mt-8 p-4 border-2 border-dashed border-white/30 rounded bg-white/5 text-center"
+              >
+                <p class="italic text-xl">
+                  "Le savoir qui n'est pas partagé est un savoir mort."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-10 text-center">
+            <button
+              onclick="closeCourse()"
+              class="px-8 py-3 bg-green-600 text-white font-bold rounded hover:bg-green-500 transition-colors text-2xl shadow-lg"
+            >
+              J'ai compris !
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Examen (Feuille de papier) -->
+      <div
+        id="exam-modal"
+        class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm transition-opacity duration-300"
+        onclick="if(event.target === this) closeExam()"
+      >
+        <div
+          class="relative w-full max-w-2xl p-10 bg-[#f4e4bc] text-black rounded-sm shadow-2xl transform scale-95 opacity-0 transition-all duration-300 modal-content chalk-font"
+          style="
+            background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+          "
+        >
+          <button
+            onclick="closeExam()"
+            class="absolute top-4 right-4 text-black/60 hover:text-black text-4xl"
+          >
+            &times;
+          </button>
+
+          <h2
+            class="text-4xl font-bold mb-8 text-center text-[#2c1810] border-b-2 border-[#2c1810] pb-4"
+          >
+            Examen Final
+          </h2>
+
+          <!-- Intro Examen -->
+          <div id="exam-intro" class="text-center text-xl space-y-6">
+            <p>Vous êtes sur le point de passer l'examen final.</p>
+            <p>
+              Avez-vous bien révisé le cours ? Une fois commencé, il faut
+              répondre juste pour réussir !
+            </p>
+            <button
+              onclick="startExam()"
+              class="px-8 py-3 bg-[#2c1810] text-[#f4e4bc] font-bold rounded hover:bg-[#4a2c20] transition-colors text-2xl shadow-lg mt-4"
+            >
+              Je suis prêt !
+            </button>
+          </div>
+
+          <form id="exam-form" class="space-y-6 text-xl hidden">
+            <!-- Question 1 -->
+            <div>
+              <p class="font-bold mb-2">
+                1. Qu'est-ce que la transparence dans l'Open Source ?
+              </p>
+              <label class="block cursor-pointer hover:bg-black/5 p-2 rounded"
+                ><input type="radio" name="q1" value="a" class="mr-2" /> Le code
+                est caché pour la sécurité.</label
+              >
+              <label class="block cursor-pointer hover:bg-black/5 p-2 rounded"
+                ><input type="radio" name="q1" value="b" class="mr-2" /> Tout le
+                monde peut lire et vérifier le code.</label
+              >
+              <label class="block cursor-pointer hover:bg-black/5 p-2 rounded"
+                ><input type="radio" name="q1" value="c" class="mr-2" /> C'est
+                une vitre transparente.</label
+              >
+            </div>
+
+            <!-- Question 2 -->
+            <div>
+              <p class="font-bold mb-2">
+                2. Quel est l'avantage de la collaboration ?
+              </p>
+              <label class="block cursor-pointer hover:bg-black/5 p-2 rounded"
+                ><input type="radio" name="q2" value="a" class="mr-2" /> On
+                travaille moins.</label
+              >
+              <label class="block cursor-pointer hover:bg-black/5 p-2 rounded"
+                ><input type="radio" name="q2" value="b" class="mr-2" /> On
+                améliore le travail ensemble.</label
+              >
+              <label class="block cursor-pointer hover:bg-black/5 p-2 rounded"
+                ><input type="radio" name="q2" value="c" class="mr-2" /> On
+                copie sur le voisin.</label
+              >
+            </div>
+
+            <!-- Question 3 -->
+            <div>
+              <p class="font-bold mb-2">3. Lequel est un logiciel libre ?</p>
+              <label class="block cursor-pointer hover:bg-black/5 p-2 rounded"
+                ><input type="radio" name="q3" value="a" class="mr-2" />
+                Photoshop</label
+              >
+              <label class="block cursor-pointer hover:bg-black/5 p-2 rounded"
+                ><input type="radio" name="q3" value="b" class="mr-2" />
+                Windows</label
+              >
+              <label class="block cursor-pointer hover:bg-black/5 p-2 rounded"
+                ><input type="radio" name="q3" value="c" class="mr-2" />
+                Firefox</label
+              >
+            </div>
+
+            <div
+              id="exam-result"
+              class="hidden text-center font-bold text-2xl mt-4"
+            ></div>
+
+            <div class="mt-8 text-center">
+              <button
+                type="submit"
+                class="px-8 py-3 bg-[#2c1810] text-[#f4e4bc] font-bold rounded hover:bg-[#4a2c20] transition-colors text-2xl shadow-lg"
+              >
+                Valider mes réponses
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <a
+        href="/"
+        class="absolute bottom-8 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-red-900/80 text-white font-bold rounded hover:bg-red-800 transition-colors shadow-lg z-20"
+      >
+        Quitter la classe
+      </a>
+    </div>
+
+    <script>
+      // Gestion du Cours
+      function openCourse() {
+        const modal = document.getElementById("course-modal");
+        const content = modal.querySelector(".modal-content");
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+        setTimeout(() => {
+          content.classList.remove("scale-95", "opacity-0");
+          content.classList.add("scale-100", "opacity-100");
+        }, 10);
+      }
+
+      function closeCourse() {
+        const modal = document.getElementById("course-modal");
+        const content = modal.querySelector(".modal-content");
+        content.classList.remove("scale-100", "opacity-100");
+        content.classList.add("scale-95", "opacity-0");
+        setTimeout(() => {
+          modal.classList.add("hidden");
+          modal.classList.remove("flex");
+        }, 300);
+      }
+
+      // Gestion de l'Examen
+      function openExam() {
+        const modal = document.getElementById("exam-modal");
+        const content = modal.querySelector(".modal-content");
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+
+        // Reset state
+        document.getElementById("exam-intro").classList.remove("hidden");
+        document.getElementById("exam-form").classList.add("hidden");
+        document.getElementById("exam-form").reset();
+        document.getElementById("exam-result").classList.add("hidden");
+
+        setTimeout(() => {
+          content.classList.remove("scale-95", "opacity-0");
+          content.classList.add("scale-100", "opacity-100");
+        }, 10);
+      }
+
+      function startExam() {
+        document.getElementById("exam-intro").classList.add("hidden");
+        document.getElementById("exam-form").classList.remove("hidden");
+      }
+
+      function closeExam() {
+        const modal = document.getElementById("exam-modal");
+        const content = modal.querySelector(".modal-content");
+        content.classList.remove("scale-100", "opacity-100");
+        content.classList.add("scale-95", "opacity-0");
+        setTimeout(() => {
+          modal.classList.add("hidden");
+          modal.classList.remove("flex");
+        }, 300);
+      }
+
+      // Validation de l'Examen
+      document
+        .getElementById("exam-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const q1 = formData.get("q1");
+          const q2 = formData.get("q2");
+          const q3 = formData.get("q3");
+          const resultDiv = document.getElementById("exam-result");
+
+          if (q1 === "b" && q2 === "b" && q3 === "c") {
+            resultDiv.textContent = "Bravo ! Vous avez réussi l'examen ! 🎉";
+            resultDiv.className =
+              "text-center font-bold text-2xl mt-4 text-green-700 block";
+            // On cache le bouton de validation pour éviter de re-soumettre
+            e.target
+              .querySelector('button[type="submit"]')
+              .classList.add("hidden");
+          } else {
+            resultDiv.textContent =
+              "Raté... Relisez le cours et réessayez ! ❌";
+            resultDiv.className =
+              "text-center font-bold text-2xl mt-4 text-red-700 block";
+          }
+          resultDiv.classList.remove("hidden");
+        });
+    </script>
+    <script src="/js/app.js"></script>
+  </body>
+</html>

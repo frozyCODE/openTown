@@ -1,32 +1,60 @@
+<link
+  href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap"
+  rel="stylesheet"
+/>
+<style>
+  .parchment-menu {
+    background-color: #f4e4bc;
+    background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
+    border-left: 8px solid #654321;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+    font-family: "MedievalSharp", cursive;
+    color: #4a3b2a;
+  }
+  .menu-link {
+    color: #5c2e0b;
+    border-bottom: 1px solid #8b4513;
+  }
+  .menu-link:hover {
+    color: #8b4513;
+    background-color: rgba(139, 69, 19, 0.1);
+  }
+</style>
+
 <div
   id="burger-menu-icon"
-  class="fixed top-5 right-5 z-[1000] cursor-pointer flex flex-col justify-between w-[30px] h-[25px] bg-white/80 p-[5px] rounded"
+  class="fixed top-5 right-5 z-[1000] cursor-pointer flex flex-col justify-between w-[35px] h-[30px] bg-[#f4e4bc] p-[6px] rounded border-2 border-[#654321] shadow-md hover:scale-105 transition-transform"
 >
-  <span class="block h-[4px] w-full bg-gray-800 rounded-[2px]"></span>
-  <span class="block h-[4px] w-full bg-gray-800 rounded-[2px]"></span>
-  <span class="block h-[4px] w-full bg-gray-800 rounded-[2px]"></span>
+  <span class="block h-[3px] w-full bg-[#5c2e0b] rounded-[2px]"></span>
+  <span class="block h-[3px] w-full bg-[#5c2e0b] rounded-[2px]"></span>
+  <span class="block h-[3px] w-full bg-[#5c2e0b] rounded-[2px]"></span>
 </div>
 
 <div
   id="burger-menu-overlay"
-  class="fixed top-0 -right-full w-[300px] h-full bg-white shadow-lg z-[1001] transition-[right] duration-300 ease-in-out p-5 box-border"
+  class="fixed top-0 -right-full w-[300px] h-full parchment-menu z-[1001] transition-[right] duration-300 ease-in-out p-5 box-border"
 >
   <div class="menu-content">
     <span
       id="close-menu"
-      class="absolute top-[10px] right-[15px] text-[30px] cursor-pointer text-gray-800"
+      class="absolute top-[10px] right-[15px] text-[30px] cursor-pointer text-[#5c2e0b] hover:text-[#8b4513]"
       >&times;</span
     >
 
     <nav class="menu-links flex flex-col gap-5 mt-[50px]">
       <a
+        href="/"
+        class="text-[1.4em] no-underline p-[10px] transition-colors menu-link"
+        >Village</a
+      >
+      <a
         href="/credits"
-        class="text-[1.2em] text-gray-800 no-underline p-[10px] border-b border-gray-200 transition-colors hover:text-green-600"
+        class="text-[1.4em] no-underline p-[10px] transition-colors menu-link"
         >Crédits</a
       >
       <a
         href="/contact"
-        class="text-[1.2em] text-gray-800 no-underline p-[10px] border-b border-gray-200 transition-colors hover:text-green-600"
+        class="text-[1.4em] no-underline p-[10px] transition-colors menu-link"
         >Nous contacter</a
       >
     </nav>
@@ -35,12 +63,13 @@
       <a
         href="https://github.com/frozyCODE/openTown"
         target="_blank"
-        class="flex items-center justify-center gap-2.5 no-underline text-gray-800 font-bold"
+        class="flex items-center justify-center gap-2.5 no-underline text-[#5c2e0b] font-bold hover:text-[#8b4513]"
       >
         <img
           src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
           alt="GitHub Logo"
           width="30"
+          class="opacity-80"
         />
         Voir le projet sur GitHub
       </a>

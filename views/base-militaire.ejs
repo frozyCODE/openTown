@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Base Militaire - N.I.R.D.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+  </style>
+</head>
+
+<body class="w-screen h-screen bg-cover bg-center overflow-hidden"
+  style="background-image: url('/images/Interieur_Militaire.jpg')" onload="document.body.style.opacity='1'">
+  <%- include('partials/menu') %>
+
+    <!-- Skip Button (Visible during dialogue) -->
+    <button id="skip-btn" onclick="skipDialogue()"
+      class="fixed top-24 right-8 z-50 p-3 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full transition-all duration-300 hover:scale-110 group border border-white/30 text-white">
+      <!-- Fast Forward Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+        class="w-8 h-8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+      </svg>
+    </button>
+
+    <!-- Exit Button (Hidden initially, shown after victory) -->
+    <a href="/" id="exit-btn"
+      class="fixed top-8 right-8 z-50 p-2 text-white/50 hover:text-white hover:scale-110 transition-all duration-300 hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+        class="w-12 h-12">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </a>
+
+    <!-- Previous Navigation REMOVED -->
+
+    <!-- Container Personnages -->
+    <div id="personnages-container"
+      class="fixed bottom-0 w-full h-screen flex justify-between pointer-events-none z-0 overflow-hidden px-4 transition-all duration-1000">
+
+      <!-- Soldat (Gauche) -->
+      <div id="soldat-container" class="relative h-full flex items-end transition-all duration-1000">
+        <!-- Bulle Soldat -->
+        <div id="soldat-bubble"
+          class="absolute top-[20%] left-[80%] z-20 opacity-0 p-8 bg-white rounded-3xl rounded-bl-none shadow-2xl border-4 border-gray-400 transform transition-all duration-500 scale-90 origin-bottom-left w-fit max-w-[450px] text-left">
+          <p class="text-2xl font-serif text-gray-900 leading-normal" id="soldat-text">...</p>
+        </div>
+        <!-- Image Soldat -->
+        <img src="/images/soldat.png" alt="Soldat"
+          class="h-[90vh] w-auto object-contain object-bottom transform drop-shadow-2xl">
+      </div>
+
+      <!-- Pingouin (Droite) -->
+      <div id="pingouin-container" class="relative h-full flex items-end transition-all duration-1000">
+        <!-- Bulle Pingouin -->
+        <div id="pingouin-bubble"
+          class="absolute top-[25%] right-[80%] z-20 opacity-0 p-8 bg-black/90 rounded-3xl rounded-br-none shadow-2xl border-4 border-green-500 transform transition-all duration-500 scale-90 origin-bottom-right w-fit max-w-[450px] text-right">
+          <p class="text-2xl font-mono text-green-400 leading-normal shadow-green-500/50 drop-shadow-md"
+            id="pingouin-text">...</p>
+        </div>
+        <!-- Image Pingouin -->
+        <img src="/images/Pingouin.png" alt="Pingouin"
+          class="h-[85vh] w-auto object-contain object-bottom transform drop-shadow-2xl">
+      </div>
+
+    </div>
+
+    <script>
+      const dialogue = [
+        { speaker: 'soldat', text: "L'ordre et la sécurité avant tout. Un système fermé est un système fiable." },
+        { speaker: 'pingouin', text: "La sécurité par l'obscurité est un mythe. Le code source doit être libre !" },
+        { speaker: 'soldat', text: "Nos utilisateurs veulent de la simplicité, pas compiler leur noyau un dimanche matin." },
+        { speaker: 'pingouin', text: "La liberté n'a pas de prix. Et au moins, mon système ne m'espionne pas." },
+        { speaker: 'soldat', text: "Pff... Des idéaux. Le marché a choisi l'efficacité." },
+        { speaker: 'pingouin', text: "Le marché change. La communauté est plus forte que n'importe quelle corporation." },
+        { speaker: 'soldat', text: "On verra bien. En attendant, mes drivers graphiques fonctionnent." },
+        { speaker: 'pingouin', text: "C'est un coup bas... Mais j'ai la ligne de commande !" }
+      ];
+
+      let currentIndex = 0;
+      let dialogueTimeout;
+
+      const soldatBubble = document.getElementById('soldat-bubble');
+      const pingouinBubble = document.getElementById('pingouin-bubble');
+      const soldatText = document.getElementById('soldat-text');
+      const pingouinText = document.getElementById('pingouin-text');
+      const soldatContainer = document.getElementById('soldat-container');
+      const pingouinContainer = document.getElementById('pingouin-container');
+      const personnagesContainer = document.getElementById('personnages-container');
+      const skipBtn = document.getElementById('skip-btn');
+      const exitBtn = document.getElementById('exit-btn');
+
+      function playDialogue() {
+        if (currentIndex >= dialogue.length) {
+          triggerVictory();
+          return;
+        }
+
+        const line = dialogue[currentIndex];
+
+        // Hide both first
+        soldatBubble.classList.remove('opacity-100', 'scale-100');
+        soldatBubble.classList.add('opacity-0', 'scale-90');
+        pingouinBubble.classList.remove('opacity-100', 'scale-100');
+        pingouinBubble.classList.add('opacity-0', 'scale-90');
+
+        setTimeout(() => {
+          if (line.speaker === 'soldat') {
+            soldatText.textContent = line.text;
+            soldatBubble.classList.remove('opacity-0', 'scale-90');
+            soldatBubble.classList.add('opacity-100', 'scale-100');
+          } else {
+            pingouinText.textContent = line.text;
+            pingouinBubble.classList.remove('opacity-0', 'scale-90');
+            pingouinBubble.classList.add('opacity-100', 'scale-100');
+          }
+          currentIndex++;
+
+          // Fixed 4 seconds duration
+          const readingTime = 4000;
+          dialogueTimeout = setTimeout(playDialogue, readingTime);
+        }, 500); // Wait for fade out
+      }
+
+      function skipDialogue() {
+        clearTimeout(dialogueTimeout); // Stop waiting
+        playDialogue(); // Run next immediately
+      }
+
+      function triggerVictory() {
+        // Hide skip button
+        if (skipBtn) skipBtn.style.display = 'none';
+
+        // 1. Hide Soldier
+        soldatBubble.classList.add('opacity-0', 'scale-90');
+        pingouinBubble.classList.add('opacity-0', 'scale-90'); // Hide penguin bubble briefly
+
+        soldatContainer.style.opacity = '0';
+        soldatContainer.style.transform = 'translateY(100px)'; // Drop down effect
+
+        setTimeout(() => {
+          soldatContainer.style.display = 'none';
+
+          // 2. Center Penguin
+          personnagesContainer.classList.remove('justify-between');
+          personnagesContainer.classList.add('justify-center');
+
+          // 3. Show "Trop facile"
+          setTimeout(() => {
+            pingouinText.textContent = "Trop facile.";
+            pingouinBubble.classList.remove('opacity-0', 'scale-90');
+            pingouinBubble.classList.add('opacity-100', 'scale-100');
+
+            // 4. Show Exit Button
+            if (exitBtn) exitBtn.classList.remove('hidden');
+
+          }, 1000); // Wait for recenter
+
+        }, 1000);
+      }
+
+      // Start after a short delay
+      setTimeout(playDialogue, 1000);
+    </script>
+    <script src="/js/app.js"></script>
+</body>
+
+</html>
