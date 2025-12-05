@@ -1,38 +1,251 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <!DOCTYPE html>
-  <html lang="fr">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Bibliothèque - N.I.R.D.</title>
-      <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body
-      class="w-screen h-screen bg-cover bg-center overflow-hidden"
-      style="background-color: #f3f4f6"
-    >
-      <%- include('partials/menu') %>
-      <div class="w-full h-full flex items-center justify-center bg-black/10">
-        <div
-          class="max-w-[800px] p-8 bg-white/90 rounded-lg shadow-2xl text-center backdrop-blur-sm"
-        >
-          <h1 class="text-3xl font-bold mb-6 text-gray-800">Bibliothèque</h1>
-          <div class="content mb-6 text-lg text-gray-700">
-            <p class="mb-2">
-              Bienvenue à la bibliothèque. Ici se trouvent les jalons de votre
-              apprentissage.
-            </p>
-            <p>(Contenu à venir)</p>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bibliothèque - N.I.R.D.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            medieval: ['MedievalSharp', 'cursive'],
+            crimson: ['Crimson Text', 'serif'],
+          },
+          colors: {
+            parchment: '#f4e4bc',
+            ink: '#2c1810',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .glow-hover:hover {
+      filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.6));
+    }
+
+    .shelf-gradient {
+      background: linear-gradient(180deg, #5d4037 0%, #3e2723 100%);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+
+<body class="w-screen h-screen overflow-hidden bg-black">
+  <!-- Background Image with Overlay -->
+  <div class="fixed inset-0 z-0">
+    <img src="/images/interieur_bibliotheque.png" alt="Bibliothèque" class="w-full h-full object-cover opacity-80">
+    <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80"></div>
+  </div>
+
+  <%- include('partials/menu') %>
+
+    <div class="relative z-10 w-full h-full flex items-center justify-center p-4">
+      <div
+        class="max-w-4xl w-full bg-slate-900/85 backdrop-blur-md rounded-xl border border-amber-500/30 shadow-2xl shadow-black overflow-hidden flex flex-col items-center">
+
+        <!-- Header -->
+        <div class="w-full p-8 text-center border-b border-amber-500/20">
+          <h1 class="text-5xl font-medieval text-amber-100 mb-4 drop-shadow-md tracking-wide">Bibliothèque des Savoirs
+          </h1>
+          <p class="text-xl font-crimson text-amber-200/80 italic">
+            "Ici reposent les secrets des anciens et les clés de votre avenir."
+          </p>
+        </div>
+
+        <!-- Bookshelf Area -->
+        <div class="w-full p-12 flex flex-col items-center justify-center bg-white/5">
+          <div class="flex justify-center gap-16 items-end mb-1">
+            <!-- Grimoire 1 -->
+            <div
+              class="group relative cursor-pointer transform transition-all duration-300 hover:-translate-y-4 hover:scale-110"
+              onclick="openModal('modal-grimoire-1')">
+              <img src="/images/grimoire1.png" alt="Grimoire 1"
+                class="w-40 h-auto glow-hover transition-all duration-300">
+              <div
+                class="opacity-0 group-hover:opacity-100 absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-amber-300 font-medieval text-lg whitespace-nowrap transition-opacity duration-300">
+                Chapitre I</div>
+            </div>
+
+            <!-- Grimoire 2 -->
+            <div
+              class="group relative cursor-pointer transform transition-all duration-300 hover:-translate-y-4 hover:scale-110"
+              onclick="openModal('modal-grimoire-2')">
+              <img src="/images/grimoire2.png" alt="Grimoire 2"
+                class="w-40 h-auto glow-hover transition-all duration-300">
+              <div
+                class="opacity-0 group-hover:opacity-100 absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-amber-300 font-medieval text-lg whitespace-nowrap transition-opacity duration-300">
+                Chapitre II</div>
+            </div>
+
+            <!-- Grimoire 3 -->
+            <div
+              class="group relative cursor-pointer transform transition-all duration-300 hover:-translate-y-4 hover:scale-110"
+              onclick="openModal('modal-grimoire-3')">
+              <img src="/images/grimoire3.png" alt="Grimoire 3"
+                class="w-40 h-auto glow-hover transition-all duration-300">
+              <div
+                class="opacity-0 group-hover:opacity-100 absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-amber-300 font-medieval text-lg whitespace-nowrap transition-opacity duration-300">
+                Chapitre III</div>
+            </div>
           </div>
-          <a
-            href="/"
-            class="inline-block px-8 py-3 bg-green-600 text-white text-lg no-underline rounded-full font-bold hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-            >Retour au Village</a
-          >
+          <!-- Shelf Visual -->
+          <div class="w-full h-6 shelf-gradient rounded-sm border-t border-[#8d6e63]"></div>
+        </div>
+
+        <!-- Footer / Back Button -->
+        <div class="w-full p-8 text-center border-t border-amber-500/20">
+          <a href="/"
+            class="group relative inline-flex items-center justify-center px-8 py-3 font-medieval text-xl text-white transition-all duration-200 bg-red-900 rounded-lg hover:bg-red-800 hover:shadow-lg hover:shadow-red-900/50 focus:outline-none ring-offset-2 focus:ring-2 ring-red-900">
+            <span class="mr-2 group-hover:-translate-x-1 transition-transform">←</span> Retour au Village
+          </a>
         </div>
       </div>
-      <script src="/js/app.js"></script>
-    </body>
-  </html>
+    </div>
+
+    <!-- Modals (Parchment Style) -->
+
+    <!-- Modal 1 -->
+    <div id="modal-grimoire-1"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm transition-opacity duration-300"
+      onclick="if(event.target === this) closeModal('modal-grimoire-1')">
+      <div
+        class="relative w-full max-w-lg p-12 bg-parchment rounded-sm shadow-2xl transform scale-95 opacity-0 transition-all duration-300 modal-content"
+        style="background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');">
+        <!-- Close X -->
+        <button onclick="closeModal('modal-grimoire-1')"
+          class="absolute top-4 right-4 text-ink/60 hover:text-ink transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <div class="border-2 border-ink/20 p-6 h-full">
+          <h2 class="text-3xl font-medieval font-bold text-ink mb-6 text-center border-b border-ink/20 pb-4">Le Serment
+            de l'Ordre</h2>
+          <div class="prose font-crimson text-ink text-xl leading-relaxed text-justify">
+            <p>
+              <span class="text-5xl float-left mr-2 font-medieval text-red-900">O</span>yez ! La quête débute par le
+              rassemblement des âmes vaillantes.
+            </p>
+            <ul class="list-none mt-4 space-y-3 text-lg">
+              <li><strong>L'Élu :</strong> Un Sage parmi nous se lèvera pour porter l'étendard.</li>
+              <li><strong>Le Conseil :</strong> Les Anciens seront instruits des arcanes du savoir durable.</li>
+              <li><strong>La Missive :</strong> Les parchemins seront partagés via les voies éthérées.</li>
+              <li><strong>L'Alliance :</strong> La Seigneurie locale sera avisée de notre entreprise.</li>
+            </ul>
+            <p class="mt-6 font-bold italic text-center font-medieval text-lg">"Ainsi s'éveille la conscience du
+              Royaume."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div id="modal-grimoire-2"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm transition-opacity duration-300"
+      onclick="if(event.target === this) closeModal('modal-grimoire-2')">
+      <div
+        class="relative w-full max-w-lg p-12 bg-parchment rounded-sm shadow-2xl transform scale-95 opacity-0 transition-all duration-300 modal-content"
+        style="background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');">
+        <button onclick="closeModal('modal-grimoire-2')"
+          class="absolute top-4 right-4 text-ink/60 hover:text-ink transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <div class="border-2 border-ink/20 p-6 h-full">
+          <h2 class="text-3xl font-medieval font-bold text-ink mb-6 text-center border-b border-ink/20 pb-4">L'Artisanat
+            Sacré</h2>
+          <div class="prose font-crimson text-ink text-xl leading-relaxed text-justify">
+            <p>
+              <span class="text-5xl float-left mr-2 font-medieval text-red-900">V</span>oici venu le temps de forger nos
+              propres outils et sortilèges.
+            </p>
+            <ul class="list-none mt-4 space-y-3 text-lg">
+              <li><strong>L'Enchantement :</strong> De vieux artefacts seront purifiés par l'esprit du Pingouin
+                (Linux).</li>
+              <li><strong>La Guilde :</strong> Des apprentis se réuniront pour restaurer les reliques.</li>
+              <li><strong>L'Apprentissage :</strong> Maîtres et disciples s'exerceront à ces nouveaux pouvoirs.
+              </li>
+              <li><strong>La Vigilance :</strong> Nous veillerons sur l'usage de ces dons.</li>
+            </ul>
+            <p class="mt-6 font-bold italic text-center font-medieval text-lg">"L'expérience forge la sagesse."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div id="modal-grimoire-3"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm transition-opacity duration-300"
+      onclick="if(event.target === this) closeModal('modal-grimoire-3')">
+      <div
+        class="relative w-full max-w-lg p-12 bg-parchment rounded-sm shadow-2xl transform scale-95 opacity-0 transition-all duration-300 modal-content"
+        style="background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');">
+        <button onclick="closeModal('modal-grimoire-3')"
+          class="absolute top-4 right-4 text-ink/60 hover:text-ink transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <div class="border-2 border-ink/20 p-6 h-full">
+          <h2 class="text-3xl font-medieval font-bold text-ink mb-6 text-center border-b border-ink/20 pb-4">L'Héritage
+            Éternel</h2>
+          <div class="prose font-crimson text-ink text-xl leading-relaxed text-justify">
+            <p>
+              <span class="text-5xl float-left mr-2 font-medieval text-red-900">Q</span>ue ces préceptes soient gravés à
+              jamais dans la pierre.
+            </p>
+            <ul class="list-none mt-4 space-y-3 text-lg">
+              <li><strong>Le Trésor :</strong> Les artefacts rejoindront le patrimoine du Royaume.</li>
+              <li><strong>La Loi :</strong> Cette voie sera inscrite dans le Grand Livre de l'Établissement.</li>
+              <li><strong>Le Gardien :</strong> Le Référent sera adoubé et soutenu par la Couronne.</li>
+              <li><strong>Le Pacte :</strong> Une alliance éternelle sera scellée avec la Contrée.</li>
+            </ul>
+            <p class="mt-6 font-bold italic text-center font-medieval text-lg">"Pour les siècles des siècles."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+      function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        const content = modal.querySelector('.modal-content');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        // Small delay to allow display:flex to apply before opacity transition
+        setTimeout(() => {
+          content.classList.remove('scale-95', 'opacity-0');
+          content.classList.add('scale-100', 'opacity-100');
+        }, 10);
+      }
+
+      function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        const content = modal.querySelector('.modal-content');
+        content.classList.remove('scale-100', 'opacity-100');
+        content.classList.add('scale-95', 'opacity-0');
+
+        // Wait for transition to finish before hiding
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }, 300);
+      }
+    </script>
+</body>
+
 </html>
