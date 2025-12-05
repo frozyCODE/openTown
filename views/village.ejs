@@ -34,6 +34,38 @@
         color: black;
         transition: opacity 0.3s ease-in-out;
       }
+      /* Animation personnalisée pour la lueur pulsante */
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          transform: scale(1);
+          filter: drop-shadow(0 0 2px rgba(253, 224, 71, 0.3));
+        }
+        50% {
+          transform: scale(1.05);
+          filter: drop-shadow(0 0 20px #fde047) drop-shadow(0 0 10px #fde047);
+        }
+      }
+
+      @keyframes pulse-glow-centered {
+        0%,
+        100% {
+          transform: translateX(-50%) scale(1);
+          filter: drop-shadow(0 0 2px rgba(253, 224, 71, 0.3));
+        }
+        50% {
+          transform: translateX(-50%) scale(1.05);
+          filter: drop-shadow(0 0 20px #fde047) drop-shadow(0 0 10px #fde047);
+        }
+      }
+
+      .animate-pulse-glow {
+        animation: pulse-glow 3s infinite ease-in-out;
+      }
+
+      .animate-pulse-glow-centered {
+        animation: pulse-glow-centered 3s infinite ease-in-out;
+      }
     </style>
   </head>
 
@@ -47,7 +79,7 @@
       <a
         href="/nird-intro"
         id="batiment-nird"
-        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 top-[10%] left-[50%] -translate-x-1/2 <%= progress.nirdVisited ? '' : 'animate-scale-pulse-centered' %>"
+        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 top-[10%] left-[50%] -translate-x-1/2 <%= progress.nirdVisited ? '' : 'animate-pulse-glow-centered' %>"
       >
         <img
           src="/images/mairie.png"
@@ -62,7 +94,7 @@
       <a
         href="/bibliotheque"
         id="batiment-bibliotheque"
-        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 top-[25%] left-[15%] <%= progress.jalon3Completed ? '' : 'animate-scale-pulse' %>"
+        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 top-[25%] left-[15%] <%= progress.jalon3Completed ? '' : 'animate-pulse-glow' %>"
       >
         <img
           src="/images/bibliotheque.png"
@@ -75,7 +107,7 @@
       <a
         href="/ecole"
         id="batiment-ecole"
-        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 top-[30%] right-[10%] <%= progress.examenReussi ? '' : 'animate-scale-pulse' %>"
+        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 top-[30%] right-[10%] <%= progress.examenReussi ? '' : 'animate-pulse-glow' %>"
       >
         <img src="/images/ecole.png" alt="École" class="w-[350px] h-auto" />
         <span class="label text-shadow">École (Test)</span>
@@ -84,7 +116,7 @@
       <a
         href="/base-militaire"
         id="batiment-militaire"
-        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 bottom-[10%] left-[30%] <%= progress.baseMilitaireVisited ? '' : 'animate-scale-pulse' %>"
+        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 bottom-[10%] left-[30%] <%= progress.baseMilitaireVisited ? '' : 'animate-pulse-glow' %>"
       >
         <img
           src="/images/militaire.png"
@@ -97,7 +129,7 @@
       <a
         href="/voyante"
         id="batiment-voyante"
-        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 bottom-[10%] right-[30%] <%= progress.maisonVoyanteVisited ? '' : 'animate-scale-pulse' %>"
+        class="absolute flex flex-col items-center text-white font-bold drop-shadow-md transition-transform hover:scale-110 bottom-[10%] right-[30%] <%= progress.maisonVoyanteVisited ? '' : 'animate-pulse-glow' %>"
       >
         <img
           src="/images/Voyante.png"
