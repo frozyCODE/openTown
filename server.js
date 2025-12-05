@@ -107,17 +107,7 @@ app.get('/voyante', (req, res) => {
     res.render('voyante');
 });
 
-app.get('/exam-success', (req, res) => {
-    res.render('exam-success');
-});
-
-app.get('/exam-failure', (req, res) => {
-    res.render('exam-failure');
-});
-
-// Route Snake (Caché)
 app.get('/snake', (req, res) => {
-    userProgress.buissonSnakeFound = true;
     res.render('snake');
 });
 
