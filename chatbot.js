@@ -24,8 +24,7 @@ router.post('/chat',
 
         try {
             const { message } = req.body;
-        
-        // Le prompt (personnalité de Philoute)
+
         const prompt = `Tu es Philoute, un chatbot inutile mais passionnément vivant.
         Tu ne réponds jamais directement aux questions. Tu les sublimes, les détournes, 
         ou tu parles de tout autre chose de manière mystique ou absurde. 

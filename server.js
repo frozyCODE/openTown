@@ -107,6 +107,14 @@ app.get('/voyante', (req, res) => {
     res.render('voyante');
 });
 
+app.get('/exam-success', (req, res) => {
+    res.render('exam-success');
+});
+
+app.get('/exam-failure', (req, res) => {
+    res.render('exam-failure');
+});
+
 // Routes Menu
 app.get('/credits', (req, res) => {
     res.render('credits');
@@ -116,9 +124,6 @@ app.get('/contact', (req, res) => {
     res.render('contact');
 });
 
-// =========================================================
-// Lancement du serveur
-// =========================================================
 app.listen(port, () => {
     console.log(`Serveur NIRD démarré sur http://localhost:${port}`);
 });
