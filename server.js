@@ -1,12 +1,15 @@
+import dotenv from 'dotenv';
+dotenv.config();
 
 import express from 'express';
 const app = express();
 const port = 3000;
 
-// 2. Configuration d'EJS
+// Config EJS
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+// Fichiers statiques
 app.use(express.static('public'));
 
 let userProgress = {
@@ -21,39 +24,34 @@ let userProgress = {
     buissonSnakeFound: false
 };
 
-// =========================================================
-// ROUTES PRINCIPALES
-// =========================================================
-
-// Route Principale du Village (Point d'Entrée)
+// ROUTES
 app.get('/', (req, res) => {
     res.render('village', { progress: userProgress });
 });
 
-// Route d'introduction au NIRD (Contenu du clic sur le bâtiment N.I.R.D.)
 app.get('/nird-intro', (req, res) => {
     res.render('nird-intro');
 });
 
-// Route de validation après lecture de l'introduction
 app.get('/valider-nird', (req, res) => {
     userProgress.nirdIntroCompleted = true;
     res.redirect('/');
 });
 
-// Routes Menu
 app.get('/credits', (req, res) => {
     res.render('credits');
 });
 
+// ROUTE CONTACT — ON PASSE EMAILJS
 app.get('/contact', (req, res) => {
-    res.render('contact');
+    res.render('contact', {
+        publicKey: process.env.EMAILJS_PUBLIC_KEY,
+        serviceId: process.env.EMAILJS_SERVICE_ID,
+        templateId: process.env.EMAILJS_TEMPLATE_ID
+    });
 });
 
-// =========================================================
-// Lancement du serveur
-// =========================================================
+// SERVEUR
 app.listen(port, () => {
     console.log(`Serveur NIRD démarré sur http://localhost:${port}`);
 });
-
