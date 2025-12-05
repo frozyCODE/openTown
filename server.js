@@ -64,6 +64,10 @@ app.get('/voyante', (req, res) => {
     res.render('voyante');
 });
 
+app.get('/snake', (req, res) => {
+    res.render('snake');
+});
+
 // Routes Menu
 app.get('/credits', (req, res) => {
     res.render('credits');

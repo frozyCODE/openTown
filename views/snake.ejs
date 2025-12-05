@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Le Serpent du Buisson - N.I.R.D.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+      .parchment {
+        background-color: #f4e4bc;
+        background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
+        border: 8px solid #654321;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5),
+          inset 0 0 50px rgba(160, 82, 45, 0.3);
+        font-family: "MedievalSharp", cursive;
+        color: #4a3b2a;
+      }
+      .wood-frame {
+        border: 12px solid #5d4037;
+        border-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png")
+          30 round;
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8),
+          0 10px 20px rgba(0, 0, 0, 0.5);
+        background-color: rgba(30, 40, 50, 0.95);
+      }
+      .btn-medieval {
+        background: linear-gradient(to bottom, #8b4513, #5c2e0b);
+        border: 2px solid #3e1c05;
+        color: #f4e4bc;
+        text-shadow: 1px 1px 0 #000;
+        box-shadow: 0 4px 0 #3e1c05, 0 5px 10px rgba(0, 0, 0, 0.5);
+        transition: all 0.1s;
+      }
+      .btn-medieval:active {
+        transform: translateY(4px);
+        box-shadow: 0 0 0 #3e1c05, inset 0 2px 5px rgba(0, 0, 0, 0.5);
+      }
+      .btn-medieval:hover {
+        filter: brightness(1.1);
+      }
+      .vignette {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.9);
+        pointer-events: none;
+        z-index: 10;
+      }
+      .modal-parchment {
+        background-color: #f4e4bc;
+        background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
+        border: 4px solid #8b4513;
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+        font-family: "MedievalSharp", cursive;
+      }
+    </style>
+  </head>
+  <body
+    class="w-screen h-screen bg-cover bg-center overflow-hidden flex flex-col items-center justify-center"
+    style="background-image: url('/images/Interieur_Mairie.jpg')"
+    onload="document.body.style.opacity='1'"
+  >
+    <div class="vignette"></div>
+    <%- include('partials/menu') %>
+
+    <div class="parchment p-8 rounded-lg text-center relative max-w-5xl z-20">
+      <!-- Clous décoratifs -->
+      <div
+        class="absolute top-3 left-3 w-4 h-4 rounded-full bg-[#4a3b2a] shadow-inner"
+      ></div>
+      <div
+        class="absolute top-3 right-3 w-4 h-4 rounded-full bg-[#4a3b2a] shadow-inner"
+      ></div>
+      <div
+        class="absolute bottom-3 left-3 w-4 h-4 rounded-full bg-[#4a3b2a] shadow-inner"
+      ></div>
+      <div
+        class="absolute bottom-3 right-3 w-4 h-4 rounded-full bg-[#4a3b2a] shadow-inner"
+      ></div>
+
+      <h1
+        class="text-5xl font-bold mb-2 text-[#5c2e0b] drop-shadow-sm decoration-wavy underline decoration-[#8b4513]"
+      >
+        Le Serpent du Buisson
+      </h1>
+      <p class="text-[#5c2e0b] text-xl mb-6 italic">
+        "Nourrissez la bête, mais ne touchez point les murs !"
+      </p>
+
+      <div class="relative inline-block">
+        <canvas
+          id="gameCanvas"
+          width="800"
+          height="520"
+          class="wood-frame rounded cursor-none"
+        ></canvas>
+        <div
+          class="absolute top-4 left-4 text-[#f4e4bc] font-bold text-2xl drop-shadow-md bg-black/50 px-3 py-1 rounded border border-[#8b4513]"
+        >
+          Score: <span id="score">0</span>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <a
+          href="/"
+          class="inline-block px-8 py-3 btn-medieval rounded font-bold text-xl no-underline"
+        >
+          Quitter le Buisson
+        </a>
+      </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div
+      id="gameOverScreen"
+      class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50 backdrop-blur-sm"
+    >
+      <div
+        class="modal-parchment p-10 rounded-lg text-center max-w-md w-full relative transform scale-100 transition-transform"
+      >
+        <!-- Decorative corner flourishes could go here -->
+        <h2 class="text-5xl font-bold text-[#8b4513] mb-2 drop-shadow-sm">
+          Mort !
+        </h2>
+        <div class="w-full h-1 bg-[#8b4513] mb-6 opacity-50"></div>
+
+        <p class="text-2xl text-[#5c2e0b] mb-4">Votre serpent a trépassé.</p>
+        <p
+          class="text-4xl font-bold text-[#8b4513] mb-8 bg-[#8b4513]/10 py-2 rounded border border-[#8b4513]/30"
+        >
+          Score : <span id="finalScore">0</span>
+        </p>
+
+        <div class="flex flex-col gap-4">
+          <button
+            onclick="location.reload()"
+            class="px-6 py-3 btn-medieval rounded font-bold text-xl w-full"
+          >
+            Tenter à nouveau
+          </button>
+          <a
+            href="/"
+            class="px-6 py-3 text-[#8b4513] font-bold hover:underline text-lg"
+          >
+            Retourner au Village
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assets (Hidden) -->
+    <img id="snakeHead" src="/images/tete_snake.png" class="hidden" />
+    <img id="snakeBody" src="/images/corp_du_snake.png" class="hidden" />
+    <img id="snakeFood" src="/images/snake-food.png.png" class="hidden" />
+
+    <script>
+      const canvas = document.getElementById("gameCanvas");
+      const ctx = canvas.getContext("2d");
+      const scoreElement = document.getElementById("score");
+      const headImg = document.getElementById("snakeHead");
+      const bodyImg = document.getElementById("snakeBody");
+      const foodImg = document.getElementById("snakeFood");
+      const gameOverScreen = document.getElementById("gameOverScreen");
+      const finalScoreElement = document.getElementById("finalScore");
+
+      // Grid size
+      const gridSize = 40;
+      const tileCountX = canvas.width / gridSize;
+      const tileCountY = canvas.height / gridSize;
+
+      let score = 0;
+      let snake = [{ x: 10, y: 6 }]; // Initial position
+      let food = { x: 15, y: 8 };
+      let dx = 0;
+      let dy = 0;
+      let gameLoop;
+      let gameSpeed = 80;
+
+      function drawGame() {
+        // Move Snake
+        const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+
+        // Check Collision (Walls)
+        if (
+          head.x < 0 ||
+          head.x >= tileCountX ||
+          head.y < 0 ||
+          head.y >= tileCountY
+        ) {
+          gameOver();
+          return;
+        }
+
+        // Check Collision (Self) - only if moving
+        if (dx !== 0 || dy !== 0) {
+          for (let i = 0; i < snake.length; i++) {
+            if (head.x === snake[i].x && head.y === snake[i].y) {
+              gameOver();
+              return;
+            }
+          }
+        }
+
+        snake.unshift(head);
+
+        // Check Food
+        if (head.x === food.x && head.y === food.y) {
+          score += 10;
+          scoreElement.textContent = score;
+          placeFood();
+        } else {
+          snake.pop(); // Remove tail if not eating
+        }
+
+        // Draw Background (Dark Slate)
+        ctx.fillStyle = "rgba(30, 40, 50, 1)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw Grid (Subtle)
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.03)";
+        ctx.lineWidth = 1;
+        for (let i = 0; i < tileCountX; i++) {
+          ctx.beginPath();
+          ctx.moveTo(i * gridSize, 0);
+          ctx.lineTo(i * gridSize, canvas.height);
+          ctx.stroke();
+        }
+        for (let i = 0; i < tileCountY; i++) {
+          ctx.beginPath();
+          ctx.moveTo(0, i * gridSize);
+          ctx.lineTo(canvas.width, i * gridSize);
+          ctx.stroke();
+        }
+
+        // Draw Food (Larger & Centered)
+        const foodSize = gridSize * 1.5;
+        const offset = (foodSize - gridSize) / 2;
+
+        // Add glow to food
+        ctx.save();
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = "#fde047"; // Yellow glow
+        ctx.drawImage(
+          foodImg,
+          food.x * gridSize - offset,
+          food.y * gridSize - offset,
+          foodSize,
+          foodSize
+        );
+        ctx.restore();
+
+        // Draw Snake
+        snake.forEach((part, index) => {
+          if (index === 0) {
+            // Draw Head
+            ctx.save();
+            ctx.translate(
+              part.x * gridSize + gridSize / 2,
+              part.y * gridSize + gridSize / 2
+            );
+            // Rotate head based on direction
+            if (dx === 1) ctx.rotate(0);
+            if (dx === -1) ctx.rotate(Math.PI);
+            if (dy === 1) ctx.rotate(Math.PI / 2);
+            if (dy === -1) ctx.rotate(-Math.PI / 2);
+            ctx.drawImage(
+              headImg,
+              -gridSize / 2,
+              -gridSize / 2,
+              gridSize,
+              gridSize
+            );
+            ctx.restore();
+          } else {
+            // Draw Body
+            ctx.drawImage(
+              bodyImg,
+              part.x * gridSize,
+              part.y * gridSize,
+              gridSize,
+              gridSize
+            );
+          }
+        });
+      }
+
+      function placeFood() {
+        food.x = Math.floor(Math.random() * tileCountX);
+        food.y = Math.floor(Math.random() * tileCountY);
+        // Ensure food doesn't spawn on snake
+        snake.forEach((part) => {
+          if (part.x === food.x && part.y === food.y) placeFood();
+        });
+      }
+
+      function gameOver() {
+        clearInterval(gameLoop);
+        finalScoreElement.textContent = score;
+        gameOverScreen.classList.remove("hidden");
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if ((e.key === "ArrowLeft" || e.key === "q") && dx !== 1) {
+          dx = -1;
+          dy = 0;
+        }
+        if ((e.key === "ArrowRight" || e.key === "d") && dx !== -1) {
+          dx = 1;
+          dy = 0;
+        }
+        if ((e.key === "ArrowUp" || e.key === "z") && dy !== 1) {
+          dx = 0;
+          dy = -1;
+        }
+        if ((e.key === "ArrowDown" || e.key === "s") && dy !== -1) {
+          dx = 0;
+          dy = 1;
+        }
+
+        // Start game on first key press if not started
+        if (!gameLoop && (dx !== 0 || dy !== 0)) {
+          gameLoop = setInterval(drawGame, gameSpeed);
+        }
+      });
+
+      // Initial draw
+      let loadedImages = 0;
+      const imgs = [headImg, bodyImg, foodImg];
+      imgs.forEach((img) => {
+        img.onload = () => {
+          loadedImages++;
+          if (loadedImages === 3) drawGame();
+        };
+      });
+      setTimeout(drawGame, 200);
+    </script>
+    <script src="/js/app.js"></script>
+  </body>
+</html>
