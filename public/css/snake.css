@@ -4,7 +4,9 @@
     position: relative;
     width: 600px; /* Base width */
     height: 400px;
-    background-color: #1a1a1a;
+    background-image: url('/images/snake-bg.png');
+    background-size: cover;
+    background-position: center;
     border: 4px solid #4ade80; /* Tailwind green-400 */
     box-shadow: 0 0 20px rgba(74, 222, 128, 0.4);
     display: flex;
@@ -13,8 +15,8 @@
 }
 
 canvas {
-    background-color: #000;
-    image-rendering: pixelated; /* Retro look */
+    background: transparent;
+    image-rendering: auto; /* Smoother for images or pixelated if they are sprites? Let's use auto for user images usually */
 }
 
 .overlay {

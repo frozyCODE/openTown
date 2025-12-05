@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cinéma - N.I.R.D.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cinema: ['Limelight', 'cursive'],
+                        body: ['Lato', 'sans-serif'],
+                    },
+                    colors: {
+                        'cinema-red': '#8b0000',
+                        'cinema-gold': '#ffd700',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        }
+
+        .screen-glow {
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body class="w-screen h-screen overflow-hidden bg-black">
+    <!-- Background Image with Overlay -->
+    <div class="fixed inset-0 z-0">
+        <img src="/images/interieur_cinema.png" alt="Intérieur Cinéma" class="w-full h-full object-cover opacity-60">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90"></div>
+    </div>
+
+    <%- include('partials/menu') %>
+
+        <div class="relative z-10 w-full h-full flex items-center justify-center p-4">
+            <div
+                class="max-w-5xl w-full bg-black/80 backdrop-blur-sm rounded-xl border-2 border-cinema-gold/30 shadow-2xl shadow-red-900/50 overflow-hidden flex flex-col items-center">
+
+                <!-- Header -->
+                <div class="w-full p-8 text-center border-b border-cinema-gold/20">
+                    <h1 class="text-6xl font-cinema text-cinema-gold mb-4 glow-text tracking-wider">LE CINÉMATOGRAPHE
+                    </h1>
+                    <p class="text-xl font-body text-gray-300 italic">
+                        "La vérité est ailleurs... peut-être sur cet écran."
+                    </p>
+                </div>
+
+                <!-- Screen Area -->
+                <div class="w-full p-12 flex flex-col items-center justify-center">
+                    <div
+                        class="relative w-full aspect-video bg-black border-4 border-gray-800 rounded-lg shadow-2xl screen-glow flex items-center justify-center overflow-hidden group cursor-pointer">
+                        <!-- Placeholder for content/video -->
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-50">
+                        </div>
+                        <div class="text-center transform transition-transform duration-500 group-hover:scale-110">
+                            <h2 class="text-4xl font-cinema text-white mb-2">PROCHAINEMENT</h2>
+                            <p class="text-gray-400 font-body">Une production N.I.R.D.</p>
+                        </div>
+
+                        <!-- Play Button Overlay -->
+                        <div
+                            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-cinema-gold drop-shadow-lg"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Seats Visual (Just a decorative bottom border) -->
+                    <div class="w-full h-12 mt-8 bg-gradient-to-b from-red-900 to-black rounded-t-3xl opacity-80"></div>
+                </div>
+
+                <!-- Footer / Back Button -->
+                <div class="w-full p-8 text-center border-t border-cinema-gold/20">
+                    <a href="/"
+                        class="group relative inline-flex items-center justify-center px-10 py-4 font-cinema text-xl text-white transition-all duration-200 bg-red-900 rounded-full hover:bg-red-700 hover:shadow-lg hover:shadow-red-600/50 focus:outline-none ring-offset-2 focus:ring-2 ring-red-900">
+                        <span class="mr-2 group-hover:-translate-x-1 transition-transform">←</span> Retour au Village
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <script src="/js/app.js"></script>
+</body>
+
+</html>

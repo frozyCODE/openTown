@@ -62,7 +62,8 @@ let userProgress = {
     examenReussi: false,
     baseMilitaireVisited: false,
     maisonVoyanteVisited: false,
-    buissonSnakeFound: false
+    buissonSnakeFound: false,
+    cinemaVisited: false
 };
 
 // =========================================================
@@ -107,6 +108,20 @@ app.get('/voyante', (req, res) => {
     res.render('voyante');
 });
 
+app.get('/cinema', (req, res) => {
+    userProgress.cinemaVisited = true; // Arrête le clignotement
+    res.render('cinema');
+});
+
+app.get('/exam-success', (req, res) => {
+    res.render('exam-success');
+});
+
+app.get('/exam-failure', (req, res) => {
+    res.render('exam-failure');
+});
+
+// Route Snake (Caché)
 app.get('/snake', (req, res) => {
     res.render('snake');
 });
