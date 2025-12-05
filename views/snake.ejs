@@ -1,65 +1,80 @@
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Le Serpent Caché - N.I.R.D.</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/css/snake.css">
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/snake.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            font-family: 'VT323', monospace;
-        }
+      body {
+        font-family: "VT323", monospace;
+      }
     </style>
-</head>
+  </head>
 
-<body class="w-screen h-screen bg-gray-900 text-green-400 overflow-hidden flex flex-col">
+  <body
+    class="w-screen h-screen bg-gray-900 text-green-400 overflow-hidden flex flex-col"
+  >
     <%- include('partials/menu') %>
 
-        <div class="flex-1 flex flex-col items-center justify-center relative">
-            <!-- Background Decor -->
-            <div
-                class="absolute inset-0 z-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-30">
-            </div>
+    <div class="flex-1 flex flex-col items-center justify-center relative">
+      <!-- Background Decor -->
+      <div
+        class="absolute inset-0 z-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-30"
+      ></div>
 
-            <h1 class="text-6xl mb-4 text-shadow drop-shadow-lg z-10">LE SERPENT CACHÉ</h1>
+      <h1 class="text-6xl mb-4 text-shadow drop-shadow-lg z-10">
+        LE SERPENT CACHÉ
+      </h1>
 
-            <div class="score-board z-10">SCORE: <span id="score">0</span></div>
+      <div class="score-board z-10">SCORE: <span id="score">0</span></div>
 
-            <div class="game-container z-10 relative">
-                <canvas id="game-board" width="600" height="400"></canvas>
+      <div class="game-container z-10 relative">
+        <canvas id="game-board" width="600" height="400"></canvas>
 
-                <!-- Start Screen -->
-                <div id="start-screen" class="overlay">
-                    <h2 class="text-4xl mb-4">PRÊT ?</h2>
-                    <button onclick="initGame()"
-                        class="px-6 py-2 border-2 border-green-400 hover:bg-green-400 hover:text-black transition-colors text-2xl animate-pulse">
-                        JOUER
-                    </button>
-                    <p class="mt-4 text-sm opacity-70">Utilisez les flèches pour bouger</p>
-                </div>
-
-                <!-- Game Over Screen -->
-                <div id="game-over-screen" class="overlay hidden">
-                    <h2 class="text-4xl mb-2 text-red-500">GAME OVER</h2>
-                    <p class="text-2xl mb-6">Score Final: <span id="final-score">0</span></p>
-                    <button onclick="initGame()"
-                        class="px-6 py-2 border-2 border-green-400 hover:bg-green-400 hover:text-black transition-colors text-2xl">
-                        REJOUER
-                    </button>
-                    <a href="/" class="mt-4 text-white underline hover:text-green-300">Retour au Village</a>
-                </div>
-            </div>
-
-            <div class="mt-8 z-10 text-center opacity-50 text-xl">
-                "Le serpent se mord la queue... comme un bug récursif."
-            </div>
+        <!-- Start Screen -->
+        <div id="start-screen" class="overlay">
+          <h2 class="text-4xl mb-4">PRÊT ?</h2>
+          <button
+            onclick="initGame()"
+            class="px-6 py-2 border-2 border-green-400 hover:bg-green-400 hover:text-black transition-colors text-2xl animate-pulse"
+          >
+            JOUER
+          </button>
+          <p class="mt-4 text-sm opacity-70">
+            Utilisez les flèches pour bouger
+          </p>
         </div>
 
-        <script src="/js/snake.js"></script>
-        <script src="/js/app.js"></script>
-</body>
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="overlay hidden">
+          <h2 class="text-4xl mb-2 text-red-500">GAME OVER</h2>
+          <p class="text-2xl mb-6">
+            Score Final: <span id="final-score">0</span>
+          </p>
+          <button
+            onclick="initGame()"
+            class="px-6 py-2 border-2 border-green-400 hover:bg-green-400 hover:text-black transition-colors text-2xl"
+          >
+            REJOUER
+          </button>
+          <a href="/" class="mt-4 text-white underline hover:text-green-300"
+            >Retour au Village</a
+          >
+        </div>
+      </div>
 
+      <div class="mt-8 z-10 text-center opacity-50 text-xl">
+        "Le serpent se mord la queue... comme un bug récursif."
+      </div>
+    </div>
+
+    <script src="/js/snake.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
 </html>
