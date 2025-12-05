@@ -1,0 +1,672 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CONTACT // ARCADE MODE</title>
+
+  <!-- TAILWIND (Utility only) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Monoton&display=swap"
+    rel="stylesheet">
+
+  <!-- EMAILJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("<%= publicKey %>");
+    })();
+  </script>
+
+  <style>
+    /* --- CORE VARIABLES --- */
+    :root {
+      --neon-green: #39ff14;
+      --neon-cyan: #0ff;
+      --neon-magenta: #f0f;
+      --cabinet-body: #1a1a1a;
+      --cabinet-accent: #333;
+      --marquee-bg: #000;
+      --control-panel-bg: #222;
+    }
+
+    body {
+      background-color: #050505;
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'VT323', monospace;
+      color: var(--neon-green);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+      /* For 3D effects */
+    }
+
+    /* --- FULL CABINET CONTAINER --- */
+    .arcade-cabinet-full {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: var(--cabinet-body);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 100px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+    }
+
+    /* --- MARQUEE (TOP) --- */
+    .marquee-section {
+      height: 120px;
+      background: #000;
+      border-bottom: 20px solid var(--cabinet-accent);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      z-index: 20;
+    }
+
+    .marquee-graphic {
+      font-family: 'Monoton', cursive;
+      /* Retro arcade font */
+      font-size: 3.5rem;
+      color: #fff;
+      text-shadow:
+        0 0 10px var(--neon-magenta),
+        0 0 20px var(--neon-magenta),
+        0 0 40px var(--neon-magenta);
+      letter-spacing: 5px;
+      animation: marquee-pulse 3s infinite alternate;
+      border: 4px solid var(--neon-cyan);
+      padding: 10px 40px;
+      border-radius: 10px;
+      background: radial-gradient(circle, rgba(255, 0, 255, 0.2) 0%, rgba(0, 0, 0, 1) 80%);
+      box-shadow: inset 0 0 20px var(--neon-magenta);
+    }
+
+    @keyframes marquee-pulse {
+      0% {
+        opacity: 0.9;
+        text-shadow: 0 0 10px var(--neon-magenta);
+      }
+
+      100% {
+        opacity: 1;
+        text-shadow: 0 0 30px var(--neon-magenta), 0 0 60px var(--neon-magenta);
+      }
+    }
+
+    /* --- SCREEN SECTION (MIDDLE) --- */
+    .screen-section {
+      flex: 1;
+      position: relative;
+      background: #000;
+      border-left: 40px solid var(--cabinet-accent);
+      border-right: 40px solid var(--cabinet-accent);
+      border-top: 20px solid #111;
+      border-bottom: 20px solid #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: inset 0 0 100px #000;
+      overflow: hidden;
+    }
+
+    /* The Bezel inside the cabinet */
+    .bezel-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 15;
+      box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.9);
+      border: 20px solid rgba(20, 20, 20, 0.8);
+      border-radius: 20px;
+    }
+
+    /* --- CRT SCREEN (EXISTING) --- */
+    .crt-screen {
+      overflow: hidden !important;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, #1a2f1a 0%, #000 90%);
+      padding: 2rem;
+      overflow-y: auto;
+      box-sizing: border-box;
+      position: relative;
+      /* CRT Curvature effect */
+      box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.8);
+      animation: flicker 0.15s infinite;
+    }
+
+    /* Scanlines */
+    .crt-screen::before {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: linear-gradient(to bottom, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* Scanline movement */
+    .crt-screen::after {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: rgba(18, 16, 16, 0.1);
+      opacity: 0;
+      z-index: 10;
+      pointer-events: none;
+      animation: scanline 10s linear infinite;
+    }
+
+    /* --- CONTROL PANEL (BOTTOM) --- */
+    .control-panel-section {
+      height: 200px;
+      background: var(--control-panel-bg);
+      border-top: 10px solid #444;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: relative;
+      transform-origin: bottom;
+      /* Slight angle to simulate looking down at controls */
+      transform: perspective(500px) rotateX(20deg);
+      box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.7);
+      z-index: 30;
+      padding: 0 10%;
+    }
+
+    /* Joystick */
+    .joystick-area {
+      width: 120px;
+      height: 120px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid #555;
+    }
+
+    .joystick-stick {
+      width: 20px;
+      height: 60px;
+      background: #888;
+      position: absolute;
+      bottom: 50%;
+      transform-origin: bottom;
+      transform: rotateX(-30deg);
+      /* Visual tilt */
+    }
+
+    .joystick-ball {
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle at 30% 30%, #ff4d4d, #990000);
+      border-radius: 50%;
+      position: absolute;
+      top: -20px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Buttons */
+    .buttons-cluster {
+      display: flex;
+      gap: 30px;
+    }
+
+    .arcade-button {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.1s;
+      box-shadow: 0 5px 0 #000, 0 10px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .arcade-button:active {
+      transform: translateY(5px);
+      box-shadow: 0 0 0 #000, 0 5px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .arcade-button::after {
+      content: "";
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      width: 80%;
+      height: 80%;
+      border-radius: 50%;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent);
+    }
+
+    .btn-red {
+      background: #ff0000;
+      border: 4px solid #cc0000;
+    }
+
+    .btn-blue {
+      background: #0000ff;
+      border: 4px solid #0000cc;
+    }
+
+    .btn-yellow {
+      background: #ffff00;
+      border: 4px solid #cccc00;
+    }
+
+    /* Button Glows */
+    .btn-red {
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.4), 0 5px 0 #550000;
+    }
+
+    .btn-blue {
+      box-shadow: 0 0 15px rgba(0, 0, 255, 0.4), 0 5px 0 #000055;
+    }
+
+    .btn-yellow {
+      box-shadow: 0 0 15px rgba(255, 255, 0, 0.4), 0 5px 0 #555500;
+    }
+
+
+    /* --- ANIMATIONS --- */
+    @keyframes scanline {
+      0% {
+        transform: translateY(0);
+        opacity: 0.1;
+      }
+
+      100% {
+        transform: translateY(100vh);
+        opacity: 0.1;
+      }
+    }
+
+    @keyframes flicker {
+      0% {
+        opacity: 0.97;
+      }
+
+      50% {
+        opacity: 0.99;
+      }
+
+      100% {
+        opacity: 0.97;
+      }
+    }
+
+    /* --- TYPOGRAPHY & FORM --- */
+    h1 {
+      font-family: 'Press Start 2P', cursive;
+      text-align: center;
+      color: var(--neon-cyan);
+      text-shadow: 4px 4px var(--neon-magenta);
+      margin-bottom: 2rem;
+      letter-spacing: 2px;
+      font-size: 1.5rem;
+      /* Smaller to fit */
+      text-transform: uppercase;
+    }
+
+    label {
+      font-size: 1rem;
+      display: block;
+      margin-bottom: 0.2rem;
+      text-transform: uppercase;
+      text-shadow: 0 0 5px var(--neon-green);
+    }
+
+    .retro-input {
+      background: transparent;
+      border: 2px solid var(--neon-green);
+      color: var(--neon-green);
+      font-family: 'VT323', monospace;
+      font-size: 1.2rem;
+      padding: 0.3rem;
+      width: 100%;
+      box-shadow: 0 0 10px var(--neon-green);
+      outline: none;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+      /* Remove browser defaults */
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      border-radius: 0;
+    }
+
+    /* Hide number spinners */
+    .retro-input::-webkit-outer-spin-button,
+    .retro-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .retro-input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    .retro-input:focus {
+      background: rgba(57, 255, 20, 0.1);
+      box-shadow: 0 0 20px var(--neon-green), inset 0 0 10px var(--neon-green);
+    }
+
+    .start-btn {
+      font-family: 'Press Start 2P', cursive;
+      background: transparent;
+      color: var(--neon-magenta);
+      border: 4px solid var(--neon-magenta);
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      display: block;
+      margin: 1.5rem auto;
+      box-shadow: 0 0 15px var(--neon-magenta);
+      transition: all 0.2s;
+      animation: blink-border 1s infinite;
+    }
+
+    .start-btn:hover {
+      background: var(--neon-magenta);
+      color: #fff;
+      box-shadow: 0 0 30px var(--neon-magenta);
+    }
+
+    .start-btn:active {
+      transform: scale(0.95);
+    }
+
+    @keyframes blink-border {
+
+      0%,
+      100% {
+        border-color: var(--neon-magenta);
+      }
+
+      50% {
+        border-color: #fff;
+      }
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      color: var(--neon-cyan);
+      font-size: 1rem;
+      text-decoration: none;
+      margin-top: 1rem;
+      text-shadow: 0 0 5px var(--neon-cyan);
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+      text-shadow: 0 0 15px var(--neon-cyan);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--neon-green);
+      border: 1px solid #000;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .marquee-section {
+        height: 80px;
+      }
+
+      .marquee-graphic {
+        font-size: 2rem;
+        padding: 5px 20px;
+      }
+
+      .control-panel-section {
+        height: 120px;
+      }
+
+      .arcade-button {
+        width: 50px;
+        height: 50px;
+      }
+
+      .joystick-area {
+        width: 80px;
+        height: 80px;
+      }
+
+      .joystick-ball {
+        width: 40px;
+        height: 40px;
+      }
+
+      .screen-section {
+        border-left-width: 10px;
+        border-right-width: 10px;
+      }
+
+      .retro-arrow {
+        font-family: 'VT323', monospace;
+        font-size: 1.4rem;
+        color: #39ff14;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+
+        text-shadow: 0 0 10px #39ff14;
+        transition: 0.2s;
+      }
+
+      .retro-arrow:hover {
+        color: #0f0;
+        text-shadow: 0 0 20px #39ff14;
+      }
+
+      .arrow-symbol {
+        font-size: 2rem;
+        animation: arrow-pulse 1s infinite;
+      }
+
+      @keyframes arrow-pulse {
+
+        0%,
+        100% {
+          opacity: 0.7;
+        }
+
+        50% {
+          opacity: 1;
+        }
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="arcade-cabinet-full">
+
+    <!-- TOP MARQUEE -->
+    <div class="marquee-section">
+      <div class="marquee-graphic">CONTACT ZONE</div>
+    </div>
+
+    <!-- MIDDLE SCREEN -->
+    <div class="screen-section">
+      <div class="bezel-overlay"></div>
+
+      <div class="crt-screen">
+
+
+        <form id="contact-form" class="max-w-xl mx-auto" autocomplete="off">
+          <button id="real-submit" type="submit" style="display:none;"></button>
+          <div class="text-center mt-4 text-xs opacity-50">
+            SYSTEM STATUS: ONLINE <br> V.1.9.8.4
+          </div>
+          <div>
+            <label for="name">> PLAYER_ONE (NOM)</label>
+            <input type="text" id="name" name="name" required class="retro-input" placeholder="_" autocomplete="off">
+          </div>
+          <div>
+            <label for="email">> FREQ_TRANSMISSION (EMAIL)</label>
+            <input type="email" id="email" name="email" required class="retro-input" placeholder="_" autocomplete="off">
+          </div>
+          <div>
+            <label for="phone">> SIGNAL_AUDIO (TEL)</label>
+            <input type="tel" id="phone" name="phone" class="retro-input" placeholder="_" autocomplete="off">
+          </div>
+          <div>
+            <label for="subject">> MISSION_OBJECTIVE (SUJET)</label>
+            <input type="text" id="subject" name="subject" required class="retro-input" placeholder="_"
+              autocomplete="off">
+          </div>
+          <div>
+            <label for="message">> DATA_PACKET (MESSAGE)</label>
+            <textarea id="message" name="message" rows="3" required class="retro-input" placeholder="_"
+              autocomplete="off"></textarea>
+          </div>
+
+        </form>
+
+
+      </div>
+    </div>
+
+    <!-- BOTTOM CONTROL PANEL -->
+    <div class="control-panel-section">
+
+      <!-- Joystick -->
+      <div class="joystick-area">
+        <div class="joystick-stick"></div>
+        <div class="joystick-ball"></div>
+      </div>
+      <!-- CENTER CONTROLS -->
+      <div class="flex items-center gap-8">
+        <!-- INSERT COIN BUTTON -->
+        <button type="submit" form="contact-form" class="start-btn" id="insert-coin-btn"
+          style="margin: 0; padding: 1rem 2rem; font-size: 0.9rem; transform: none;">
+          INSERT COIN TO START
+        </button>
+
+        <!-- BACK BUTTON -->
+        <a href="/" class="start-btn"
+          style="margin: 0; padding: 1rem 2rem; font-size: 0.9rem; transform: none; text-decoration: none; color: var(--neon-cyan); border-color: var(--neon-cyan); box-shadow: 0 0 15px var(--neon-cyan); animation: none;">
+          RETURN
+        </a>
+      </div>
+
+
+
+
+
+
+
+
+      <!-- Buttons + Insert Coin -->
+      <div class="buttons-cluster flex items-center gap-10">
+
+        <!-- Classic Arcade Buttons -->
+        <div class="flex gap-6">
+          <div class="arcade-button btn-red" title="FIRE"></div>
+          <div class="arcade-button btn-blue" title="JUMP"></div>
+          <div class="arcade-button btn-yellow" title="MAGIC"></div>
+        </div>
+
+
+
+      </div>
+
+
+      <!-- SCRIPT EMAILJS -->
+      <script>
+        document.getElementById('contact-form').addEventListener('submit', function (event) {
+          event.preventDefault();
+
+          const serviceID = "<%= serviceId %>";
+          const templateID = "<%= templateId %>";
+          const btn = document.getElementById('insert-coin-btn');
+          const originalText = btn.innerText;
+
+          // Animation d'envoi
+          btn.innerText = "UPLOADING...";
+          btn.style.animation = "none";
+          btn.style.borderColor = "#fff";
+
+          emailjs.sendForm(serviceID, templateID, this)
+            .then(() => {
+              btn.innerText = "MISSION ACCOMPLISHED";
+              btn.style.borderColor = "var(--neon-green)";
+              btn.style.color = "var(--neon-green)";
+              setTimeout(() => {
+                alert(">> TRANSMISSION REUSSIE !");
+                this.reset();
+                btn.innerText = originalText;
+                btn.style.animation = "blink-border 1s infinite";
+                btn.style.color = "var(--neon-magenta)";
+                btn.style.borderColor = "var(--neon-magenta)";
+              }, 500);
+            })
+            .catch((error) => {
+              console.error("FAILED...", error);
+              btn.innerText = "SYSTEM ERROR";
+              btn.style.borderColor = "red";
+              btn.style.color = "red";
+              alert(">> ERREUR CRITIQUE : " + JSON.stringify(error));
+              setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.animation = "blink-border 1s infinite";
+                btn.style.color = "var(--neon-magenta)";
+                btn.style.borderColor = "var(--neon-magenta)";
+              }, 2000);
+            });
+        });
+
+        // Optional: Add sound effects or interactions to arcade buttons
+        document.querySelectorAll('.arcade-button').forEach(btn => {
+          btn.addEventListener('click', () => {
+            // Visual feedback is handled by CSS :active
+            console.log('Arcade button pressed:', btn.title);
+          });
+        });
+      </script>
+
+</body>
+
+</html>
+=======
+>>>>>>> 36951a801d4d3316750f26e6488dc0b4ab7d7f93
