@@ -2,18 +2,99 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-          <div class="content mb-4">
-            <p>Développé par l'équipe Nuit de l'Info 2025.</p>
-            <p>Merci à tous les contributeurs.</p>
-          </div>
-          <a
-            href="/"
-            class="inline-block mt-5 px-5 py-2.5 bg-green-600 text-white no-underline rounded font-bold hover:bg-green-700"
-            >Retour au Village</a
-          >
-        </div>
-        <script src="/js/app.js"></script>
-      </body>
-    </html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crédits - N.I.R.D.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+      .parchment {
+        background-color: #f4e4bc;
+        background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
+        border: 8px solid #654321;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5),
+          inset 0 0 50px rgba(160, 82, 45, 0.3);
+        font-family: "MedievalSharp", cursive;
+        color: #4a3b2a;
+      }
+      .role-title {
+        color: #8b4513;
+        border-bottom: 2px solid #8b4513;
+        display: inline-block;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+      }
+    </style>
   </head>
+  <body
+    class="w-screen h-screen bg-cover bg-center overflow-hidden flex flex-col items-center justify-center"
+    style="background-image: url('/images/Interieur_Mairie.jpg')"
+    onload="document.body.style.opacity='1'"
+  >
+    <%- include('partials/menu') %>
+
+    <div
+      class="parchment p-8 max-w-4xl w-full mx-4 text-center overflow-y-auto max-h-[85vh] relative rounded-lg"
+    >
+      <!-- Clous décoratifs -->
+      <div
+        class="absolute top-3 left-3 w-4 h-4 rounded-full bg-[#4a3b2a] shadow-inner"
+      ></div>
+      <div
+        class="absolute top-3 right-3 w-4 h-4 rounded-full bg-[#4a3b2a] shadow-inner"
+      ></div>
+      <div
+        class="absolute bottom-3 left-3 w-4 h-4 rounded-full bg-[#4a3b2a] shadow-inner"
+      ></div>
+      <div
+        class="absolute bottom-3 right-3 w-4 h-4 rounded-full bg-[#4a3b2a] shadow-inner"
+      ></div>
+
+      <h1
+        class="text-5xl font-bold mb-8 text-[#5c2e0b] drop-shadow-sm decoration-wavy underline decoration-[#8b4513]"
+      >
+        L'Équipe N.I.R.D.
+      </h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+        <!-- SLAM -->
+        <div class="flex flex-col space-y-2">
+          <h2 class="text-2xl font-bold text-center role-title">SLAM</h2>
+          <div class="text-lg text-center">Da Silva Peixoto Gabriel</div>
+          <div class="text-lg text-center">ALLAG Khaled</div>
+          <div class="text-lg text-center">KOZZI Naym</div>
+        </div>
+
+        <!-- SISR -->
+        <div class="flex flex-col space-y-2">
+          <h2 class="text-2xl font-bold text-center role-title">SISR</h2>
+          <div class="text-lg text-center">Beuvrier Léo</div>
+          <div class="text-lg text-center">Raout Mathéo</div>
+          <div class="text-lg text-center">Truffin Remi</div>
+          <div class="text-lg text-center">Chaloin Kylian</div>
+          <div class="text-lg text-center">Da Cunha Mathéo</div>
+        </div>
+
+        <!-- Première Année -->
+        <div class="flex flex-col space-y-2">
+          <h2 class="text-2xl font-bold text-center role-title">
+            Première Année
+          </h2>
+          <div class="text-lg text-center">Chulliat Théo</div>
+          <div class="text-lg text-center">Layaida Sarah</div>
+        </div>
+      </div>
+
+      <div class="mt-12 pt-4 border-t-2 border-[#8b4513]/30">
+        <p class="text-[#5c2e0b] italic text-xl">"La nuit de l'info 2025"</p>
+      </div>
+    </div>
+    <script src="/js/app.js"></script>
+  </body>
 </html>
